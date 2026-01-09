@@ -4,8 +4,8 @@ import Link from "next/link";
 
 export default function SigninPage() {
   return (
-    <div className="bg-background text-foreground flex items-center justify-center h-screen w-screen">
-      <div className="w-full max-w-[400] rounded-xl border border-white/10 p-8 space-y-6">
+    <div className="bg-background text-foreground flex justify-center items-center h-full w-full">
+      <div className="w-full max-w-[400] rounded-xl border border-white/10 mt-32 p-8 space-y-6">
         <h1 className="text-2xl font-bold text-center">
           Sign in to Splitwise
         </h1>
@@ -32,11 +32,11 @@ export default function SigninPage() {
 
         <p className="text-sm text-center text-white/60">
           Don’t have an account?{" "}
-         <Link href={'/signup'}>
-          <span className="text-white underline cursor-pointer">
-            Sign up
-          </span>
-         </Link>
+          <Link href={'/signup'}>
+            <span className="text-white underline cursor-pointer">
+              Sign up
+            </span>
+          </Link>
         </p>
       </div>
     </div>
