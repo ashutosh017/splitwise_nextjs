@@ -1,0 +1,110 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Member {
+  id          String   @id @default(uuid())
+  name        String
+  email       String   @unique
+  password    String
+  dateCreated DateTime @default(now())
+
+  groups   GroupMember[]
+  expenses Expense[]     @relation("PaidBy")
+  splits   Split[]
+  owned    Balance[]     @relation("Owned")
+  owed     Balance[]     @relation("Owed")
+
+  @@map("members")
+}
+
+model Group {
+  id          String  @id @default(uuid())
+  name        String
+  description String?
+
+  expenses Expense[]
+  members  GroupMember[]
+  balances Balance[]
+
+  @@map("groups")
+}
+
+model GroupMember {
+  id String @id @default(uuid())
+
+  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  memberId String
+
+  group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  groupId String
+
+  @@unique([groupId, memberId])
+  @@map("group_members")
+}
+
+model Expense {
+  id          String  @id @default(uuid())
+  description String?
+  amount      Decimal
+
+  group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  groupId String
+
+  whoPaid   Member @relation("PaidBy", fields: [whoPaidId], references: [id])
+  whoPaidId String
+
+  splitType SplitType
+  splits    Split[]
+
+  @@map("expenses")
+}
+
+model Split {
+  id    String  @id @default(uuid())
+  value Decimal
+
+  expense   Expense @relation(fields: [expenseId], references: [id], onDelete: Cascade)
+  expenseId String
+
+  member   Member @relation(fields: [memberId], references: [id])
+  memberId String
+
+  @@unique([memberId, expenseId])
+  @@map("splits")
+}
+
+model Balance {
+  id     String  @id @default(uuid())
+  amount Decimal
+
+  group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  groupId String
+
+  from         Member @relation("Owed", fields: [fromMemberId], references: [id])
+  fromMemberId String
+
+  to         Member @relation("Owned", fields: [toMemberId], references: [id])
+  toMemberId String
+
+  @@unique([groupId, fromMemberId, toMemberId])
+  @@map("balances")
+}
+
+enum SplitType {
+  EQUAL
+  PERCENTAGE
+  SHARE
+  AMOUNT
+}

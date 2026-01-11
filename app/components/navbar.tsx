@@ -1,25 +1,19 @@
-import { ModeToggle } from "@/components/mode-toggle";
-import Link from "next/link";
-import { useContext } from "react";
-import { useAuth } from "../context/AuthContext";
-import { Button } from "@/components/ui/button";
+import { cookies } from "next/headers";
+import ClientNavbar from "./client_navbar";
+import { verifyToken } from "../actions/auth";
 
-export default function Navbar() {
-    const { user, isLoading } = useAuth()
-    return <div className="h-18 w-screen border-b-2 border-white/10">
-        <div className="container mx-auto h-full flex items-center justify-between">
-            <Link href={'/'}>
-                <h1 className="text-3xl font-bold">
-                    Splitwise
-                </h1>
-            </Link>
-            <div className=" flex space-x-4">
-                <Button>{
-                    user ? user.email : 'Login'
-                }</Button>
-                <ModeToggle />
+export default async function Navbar() {
+    const cookieStore = await cookies();
+    const token = cookieStore.get('token')?.value;
+    console.log("token not found")
+    if (!token) return <ClientNavbar isLoggedIn={false} name={null} />;
 
-            </div>
-        </div>
-    </div>
+    const result = await verifyToken({ token });
+
+    if (!result.success) {
+        console.log("Verification failed:", result.error);
+        return <ClientNavbar isLoggedIn={false} name={null} />;
+    }
+
+    return <ClientNavbar isLoggedIn={true} name={result.data.name} />;
 }

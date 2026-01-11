@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "./components/navbar";
-import AuthContextProvider from "./context/AuthContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,14 +35,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <AuthContextProvider >
-            <div className="h-screen">
-              <Navbar />
-              <div className="container mx-auto">
-                {children}
-              </div>
+          <div className="h-screen">
+            <Navbar />
+            <div className="container mx-auto">
+              {children}
             </div>
-          </AuthContextProvider>
+          </div>
         </ThemeProvider>
       </body>
     </html>
