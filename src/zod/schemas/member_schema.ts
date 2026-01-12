@@ -1,4 +1,4 @@
-import z, { type TypeOf } from "zod";
+import z from "zod";
 
 export const MemberSchema = z.object({
     id: z.uuid(),

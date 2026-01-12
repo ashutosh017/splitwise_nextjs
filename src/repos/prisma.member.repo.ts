@@ -35,6 +35,23 @@ export class PrismaMemberRepository implements MemberRepository {
         }
         return this.toDomain(user)
     }
+    async findFromKeyword(keyword: string): Promise<Member[] | null> {
+        return prisma.member.findMany({
+            where: {
+                OR: [{
+                    name: {
+                        contains: keyword
+                    }
+                },
+                {
+                    email: {
+                        contains: keyword
+                    }
+                }
+                ]
+            }
+        })
+    }
     private toDomain(member: PrismaMember): Member {
         return {
             id: member.id,

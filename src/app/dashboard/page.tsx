@@ -1,23 +1,21 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { Receipt, UserPlus, TrendingUp, TrendingDown } from "lucide-react";
+import { Receipt, UserPlus, TrendingUp, TrendingDown, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { verifyToken } from "../actions/auth";
+import { CreateGroupDialog } from "@/components/group/createGroupDialog";
 
 export default async function DashboardPage() {
     const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;
 
-    // 1. Auth Guard
     if (!token) redirect("/signin");
     const auth = await verifyToken({ token });
     if (!auth.success) redirect("/signin");
 
     const user = auth.data;
 
-    // 2. Data Fetching (Example logic for balances)
-    // In a real app, you'd calculate these from your 'Expenses' and 'Splits' tables
     const totalOwedToYou = 450.00;
     const totalYouOwe = 120.50;
     const netBalance = totalOwedToYou - totalYouOwe;
@@ -31,11 +29,11 @@ export default async function DashboardPage() {
                     <p className="text-muted-foreground">Welcome back, {user.name}</p>
                 </div>
                 <div className="flex gap-3">
-                    <Button variant="outline"><UserPlus className="mr-2 h-4 w-4" /> Add Friend</Button>
+                    {/* <Button variant="outline"><Plus className="mr-2 h-4 w-4" /> Create Group</Button> */}
+                    <CreateGroupDialog />
                     <Button><Receipt className="mr-2 h-4 w-4" /> Add Expense</Button>
                 </div>
             </div>
-
             {/* Balance Overview Cards */}
             <div className="grid gap-4 md:grid-cols-3">
                 <Card className="border-white/10 bg-card">
@@ -86,6 +84,7 @@ export default async function DashboardPage() {
                     </div>
                 </section>
             </div>
+
         </div>
     );
 }

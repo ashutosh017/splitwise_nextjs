@@ -6,4 +6,5 @@ export interface MemberRepository {
     create(data: CreateMemberInput): Promise<MemberWithHashedPassword>
     findByEmail(email: string): Promise<MemberWithHashedPassword | null>
     findById(id: string): Promise<Member | null>
+    findFromKeyword(keyword: string): Promise<Member[] | null>
 }

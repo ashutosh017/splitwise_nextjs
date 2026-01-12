@@ -1,12 +1,12 @@
 'use server'
 import { env } from "../../lib/env"
 import { authService } from "../../di/container"
-import { SigninData, SignupData, TokenInput } from "../../zod"
+import { SigninData, SignupData, TokenInput, TokenSummary } from "../../zod"
 import { ActionResponse, catchErrors } from "@/lib/action-wrapper"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 
-export async function verifyToken(input: TokenInput) {
+export async function verifyToken(input: TokenInput): Promise<ActionResponse<TokenSummary>> {
     return catchErrors(async () => authService.verifyToken(input))
 }
 
@@ -36,4 +36,12 @@ export async function logout() {
     const cookieStore = await cookies();
     cookieStore.delete("token");
     redirect('/');
+}
+
+export async function isAuthenticated() {
+    const cookieStore = await cookies();
+    const token = cookieStore.get('token')
+    if (!token) return false;
+    const verify = await verifyToken({ token: token.value })
+    return !!verify
 }
