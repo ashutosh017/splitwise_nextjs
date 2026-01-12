@@ -1,7 +1,7 @@
-import type { Prisma } from "@/src/generated/prisma/client";
-import type { TransactionClient } from "@/src/generated/prisma/internal/prismaNamespace";
-import prisma from "../prisma";
-import type { Split as PrismaSplit } from '@/src/generated/prisma/client'
+import type { Prisma } from "@/generated/prisma/client";
+import type { TransactionClient } from "@/generated/prisma/internal/prismaNamespace";
+import prisma from "../lib/prisma";
+import type { Split as PrismaSplit } from '@/generated/prisma/client'
 import type { CreateManySplitInput, SplitSummary } from "../zod";
 import type { SplitRepository } from "../interfaces";
 

@@ -1,5 +1,5 @@
-import prisma from "../prisma";
-import type { Prisma, Expense as PrismaExpense } from '@/src/generated/prisma/client'
+import prisma from "../lib/prisma";
+import type { Prisma, Expense as PrismaExpense } from '@/generated/prisma/client'
 import type { ExpenseRepository } from "../interfaces";
 import type { CreateExpenseRepoInput, ExpenseSummary, UpdateExpenseInput } from "../zod";
 

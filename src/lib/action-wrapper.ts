@@ -1,4 +1,4 @@
-import { AppError } from "@/app/errors/app_error";
+import { AppError } from "@/errors/app_error";
 
 export type ActionResponse<T> =
     | { success: true; data: T; error: null }

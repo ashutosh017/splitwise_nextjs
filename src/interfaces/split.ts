@@ -1,4 +1,4 @@
-import type { Prisma } from "@/src/generated/prisma/client";
+import type { Prisma } from "@/generated/prisma/client";
 import type { CreateManySplitInput, SplitSummary } from "../zod";
 
 export interface SplitRepository {

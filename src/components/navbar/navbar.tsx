@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import ClientNavbar from "./client_navbar";
-import { verifyToken } from "../actions/auth";
+import { verifyToken } from "../../app/actions/auth";
 
 export default async function Navbar() {
     const cookieStore = await cookies();

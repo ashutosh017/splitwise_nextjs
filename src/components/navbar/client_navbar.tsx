@@ -1,7 +1,6 @@
 'use client';
 
-import { ModeToggle } from "@/components/mode-toggle";
-import { Button } from "@/components/ui/button";
+import { ModeToggle } from "@/components/theme/mode-toggle";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -10,6 +9,8 @@ import {
 } from "@/components/ui/dropdown-menu"; // Assuming Shadcn UI
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import Link from "next/link";
+import { logout } from "../../app/actions/auth";
+import { Button } from "@/components/ui/button";
 
 export default function ClientNavbar({ isLoggedIn, name }: { isLoggedIn: boolean, name: string | null }) {
 
@@ -17,7 +18,7 @@ export default function ClientNavbar({ isLoggedIn, name }: { isLoggedIn: boolean
     const initials = name ? name.split(' ').map(n => n[0]).join('').toUpperCase() : "U";
 
     return (
-        <nav className="h-16 w-full border-b border-white/10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <nav className="h-16 w-full border-b border-white/10 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
             <div className="container mx-auto h-full flex items-center justify-between px-4">
                 <Link href="/" className="hover:opacity-80 transition-opacity">
                     <h1 className="text-2xl font-bold tracking-tight">
@@ -53,7 +54,7 @@ export default function ClientNavbar({ isLoggedIn, name }: { isLoggedIn: boolean
                                     </DropdownMenuItem>
                                     <DropdownMenuItem
                                         className="text-destructive focus:bg-destructive/10"
-                                    // onClick={() => Signout()}
+                                        onClick={logout}
                                     >
                                         Log out
                                     </DropdownMenuItem>

@@ -1,6 +1,6 @@
 import { DuplicateMembersInSplitsArrayError, EmptySplitsArrayError, ExpenseNotFoundError, InvalidAmountError, InvalidSplitValueError, PercentageSplitNotEqualTo100Error, SplitAmountMismatchError } from "../errors/errors";
 import type { ExpenseRepository } from "../interfaces";
-import prisma from "../prisma";
+import prisma from "../lib/prisma";
 import type { CreateExpenseInput, ExpenseSummary, SplitSummary, SplitType, UpdateExpenseInput } from "../zod";
 import type { BalanceService } from "./balance.service";
 import type { GroupService } from "./group.service";

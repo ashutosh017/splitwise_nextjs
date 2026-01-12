@@ -1,5 +1,5 @@
-import prisma from "../prisma";
-import type { Member as PrismaMember } from '@/src/generated/prisma/client'
+import prisma from "../lib/prisma";
+import type { Member as PrismaMember } from '@/generated/prisma/client'
 import type { MemberRepository } from "../interfaces";
 import type { CreateMemberInput, Member, MemberWithHashedPassword } from "../zod";
 

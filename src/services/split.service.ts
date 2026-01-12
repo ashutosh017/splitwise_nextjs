@@ -1,5 +1,5 @@
 import { SplitsNotFoundError } from "../errors/errors";
-import type { Prisma } from "@/src/generated/prisma/client";
+import type { Prisma } from "@/generated/prisma/client";
 import type { SplitRepository } from "../interfaces";
 import type { CreateManySplitInput, SplitSummary } from "../zod";
 

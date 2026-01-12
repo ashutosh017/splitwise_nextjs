@@ -1,4 +1,4 @@
-import { env } from "../env";
+import { env } from "../lib/env";
 import jwt from 'jsonwebtoken'
 
 import type { MemberService } from "./member.service";

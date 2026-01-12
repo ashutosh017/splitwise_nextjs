@@ -1,8 +1,8 @@
-import prisma from "../prisma";
-import type { Member as PrismaMember } from '@/src/generated/prisma/client'
+import prisma from "../lib/prisma";
+import type { Member as PrismaMember } from '@/generated/prisma/client'
 import type { GroupRepository } from "../interfaces";
 import type { CreateGroupInput, GroupSummary, Member } from "../zod";
-import type { Group as PrismaGroup } from '@/src/generated/prisma/client'
+import type { Group as PrismaGroup } from '@/generated/prisma/client'
 
 export class PrismaGroupRepository implements GroupRepository {
     async create(groupInput: CreateGroupInput): Promise<GroupSummary> {

@@ -1,4 +1,4 @@
-import type { Prisma } from "@/src/generated/prisma/client";
+import type { Prisma } from "@/generated/prisma/client";
 import type { CreateExpenseRepoInput, ExpenseSummary, UpdateExpenseInput } from "../zod";
 
 export interface ExpenseRepository {
