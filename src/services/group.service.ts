@@ -1,6 +1,6 @@
 import { GroupNotFoundError, MemberAlreadyInGroupError, MemberNotFoundError, MemberNotInGroupError } from "../errors/errors";
 import type { GroupRepository } from "../interfaces";
-import type { CreateGroupInput, CreateGroupWithMembersInput, GroupSummary, GroupWithMembers, Member } from "../zod";
+import type { CreateGroupInput, CreateGroupWithMembersInput, DetailedGroupResponse, GroupSummary, GroupWithMembers, Member } from "../zod";
 import type { MemberService } from "./member.service";
 
 export class GroupService {
@@ -8,6 +8,10 @@ export class GroupService {
         private readonly groupRepo: GroupRepository,
         private readonly memberService: MemberService,
     ) {
+    }
+    async getGroupDetails(groupId: string): Promise<GroupSummary | null> {
+        return this.groupRepo.findById(groupId)
+
     }
     async createGroup(input: CreateGroupInput): Promise<GroupSummary> {
         const group = await this.groupRepo.create(input);

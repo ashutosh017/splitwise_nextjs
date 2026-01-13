@@ -37,6 +37,7 @@ export class PrismaGroupRepository implements GroupRepository {
         }
     }
     async findById(groupId: string): Promise<GroupSummary | null> {
+        if (!groupId) return null;
         const group = await prisma.group.findUnique({
             where: {
                 id: groupId
@@ -111,13 +112,13 @@ export class PrismaGroupRepository implements GroupRepository {
                 memberId
             }, select: {
                 group: {
-                    select:{
-                        id:true,
-                        name:true,
-                        description:true,
-                        members:{
-                            select:{
-                                id:true,
+                    select: {
+                        id: true,
+                        name: true,
+                        description: true,
+                        members: {
+                            select: {
+                                id: true,
                             }
                         }
                     }

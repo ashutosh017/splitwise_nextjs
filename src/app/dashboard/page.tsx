@@ -29,15 +29,14 @@ export default async function DashboardPage() {
     const netBalance = totalOwedToYou - totalYouOwe;
 
     return (
-        <div className="space-y-8 pb-10">
+        <div className="space-y-8 pb-10 px-4">
             {/* Header Section */}
             <div className="flex items-center justify-between border-b border-white/10 pb-6">
                 <div>
                     <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
                     <p className="text-muted-foreground">Welcome back, {user.name}</p>
                 </div>
-                <div className="flex gap-3">
-                    {/* <Button variant="outline"><Plus className="mr-2 h-4 w-4" /> Create Group</Button> */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
                     <CreateGroupDialog />
                     <Button><Receipt className="mr-2 h-4 w-4" /> Add Expense</Button>
                 </div>
@@ -78,18 +77,18 @@ export default async function DashboardPage() {
 
             {/* Main Content Area */}
             <div className="grid gap-8 md:grid-cols-2">
-                <section className="space-y-4">
+                {/* <section className="space-y-4">
                     <h2 className="text-xl font-semibold">Recent Activity</h2>
                     <div className="rounded-xl border border-white/10 p-4 text-sm text-muted-foreground text-center py-10">
                         No recent expenses to show.
                     </div>
-                </section>
+                </section> */}
 
                 <section className="space-y-4">
                     <h2 className="text-xl font-semibold">Your Groups</h2>
 
                     {userGroups && userGroups.length > 0 ? (
-                        <div className="grid gap-4 sm:grid-cols-2">
+                        <div className="grid gap-4 lg:grid-cols-2">
                             {userGroups.map((group) => (
                                 <GroupCard key={group.id} group={group} />
                             ))}

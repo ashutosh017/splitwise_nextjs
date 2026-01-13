@@ -1,7 +1,7 @@
 'use server'
 import { groupService, memberService } from "@/di/container";
 import { ActionResponse, catchErrors } from "@/lib/action-wrapper";
-import { GroupSummary, Member } from "@/zod";
+import { GroupSummary, GroupWithMembers, Member } from "@/zod";
 import { getCurrentUser } from "./auth";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
@@ -41,7 +41,14 @@ export async function createGroup(initialState: any, formData: FormData): Promis
     });
 }
 
-export async function findGroups(memberId: string): Promise<ActionResponse<GroupSummary[] | null>> {
+export async function getGroupDetail(groupId: string): Promise<ActionResponse<GroupSummary | null>> {
+    return catchErrors(async () => {
+        const group = await groupService.getGroupDetails(groupId)
+        return group
+    })
+}
+
+export async function findGroups(memberId: string): Promise<ActionResponse<GroupWithMembers[] | null>> {
     return catchErrors(async () => {
         const groups = await groupService.listGroupsForMember(memberId)
         console.log("grousp: ", groups)

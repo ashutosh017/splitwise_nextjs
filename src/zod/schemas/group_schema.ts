@@ -32,7 +32,11 @@ export const GroupWithMembersSchema = GroupSummarySchema.extend({
         id: z.uuid()
     }))
 })
+export const DetailedGroupSchema = GroupSummarySchema.extend({
+    members: z.array(MemberSchema)
+})
 
+export type DetailedGroupResponse = z.infer<typeof DetailedGroupSchema>
 export type GroupWithMembers = z.infer<typeof GroupWithMembersSchema>
 export type GroupIdInput = z.infer<typeof GroupIdInputSchema>
 export type CreateGroupInput = z.infer<typeof CreateGroupSchema>
