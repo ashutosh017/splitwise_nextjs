@@ -23,7 +23,7 @@ export class AuthService {
 
     async signin(data: SigninData): Promise<Token> {
         const user = await this.memberService.findByEmail(data.email);
-        const token = jwt.sign({ userId: user.id, name: user.name, email: user.email }, env.JWT_SECRET, {
+        const token = jwt.sign({ id: user.id, name: user.name, email: user.email }, env.JWT_SECRET, {
             expiresIn: '7d'
         })
         return {
@@ -36,7 +36,6 @@ export class AuthService {
             if (typeof decoded === 'string') {
                 return JSON.parse(decoded) as TokenSummary;
             }
-            console.log("decoded: ", decoded)
             return decoded as TokenSummary;
         } catch (error) {
             throw new UnauthorizedError("Error verifying token")

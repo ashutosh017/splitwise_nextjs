@@ -16,6 +16,9 @@ export class MemberService {
         if (!member) throw new MemberNotFoundError();
         return member;
     }
+    async findManyByEmail(emails: string[]): Promise<Member[]> {
+        return this.memberRepo.findManyByEmail(emails)
+    }
     async findByEmail(email: string): Promise<MemberWithHashedPassword> {
         const member = await this.memberRepo.findByEmail(email);
         if (!member) throw new MemberNotFoundError();

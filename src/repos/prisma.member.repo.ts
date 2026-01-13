@@ -24,10 +24,25 @@ export class PrismaMemberRepository implements MemberRepository {
             password: user.password
         } : null
     }
+    async findManyByEmail(emails: string[]): Promise<Member[]> {
+        return prisma.member.findMany({
+            where: {
+                email: {
+                    in: emails
+                }
+            },
+            select: {
+                id: true,
+                name: true,
+                email: true
+            }
+        })
+    }
     async findById(id: string): Promise<Member | null> {
+        if (!id) return null;
         const user = await prisma.member.findUnique({
             where: {
-                id
+                id: id
             }
         })
         if (!user) {

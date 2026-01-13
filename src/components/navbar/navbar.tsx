@@ -5,7 +5,6 @@ import { verifyToken } from "../../app/actions/auth";
 export default async function Navbar() {
     const cookieStore = await cookies();
     const token = cookieStore.get('token')?.value;
-    console.log("token not found")
     if (!token) return <ClientNavbar isLoggedIn={false} name={null} />;
 
     const result = await verifyToken({ token });

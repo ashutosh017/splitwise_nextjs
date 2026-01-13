@@ -5,6 +5,7 @@ import { SigninData, SignupData, TokenInput, TokenSummary } from "../../zod"
 import { ActionResponse, catchErrors } from "@/lib/action-wrapper"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
+import { cache } from "react"
 
 export async function verifyToken(input: TokenInput): Promise<ActionResponse<TokenSummary>> {
     return catchErrors(async () => authService.verifyToken(input))
@@ -45,3 +46,12 @@ export async function isAuthenticated() {
     const verify = await verifyToken({ token: token.value })
     return !!verify
 }
+export const getCurrentUser = cache(
+    async (): Promise<TokenSummary | null> => {
+        const token = (await cookies()).get('token')
+        if (!token) return null;
+        const tokenSummary = await verifyToken({ token: token.value })
+        if (!tokenSummary.success) return null;
+        return tokenSummary.data
+    }
+)

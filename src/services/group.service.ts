@@ -1,6 +1,6 @@
 import { GroupNotFoundError, MemberAlreadyInGroupError, MemberNotFoundError, MemberNotInGroupError } from "../errors/errors";
 import type { GroupRepository } from "../interfaces";
-import type { CreateGroupInput, GroupSummary, Member } from "../zod";
+import type { CreateGroupInput, CreateGroupWithMembersInput, GroupSummary, GroupWithMembers, Member } from "../zod";
 import type { MemberService } from "./member.service";
 
 export class GroupService {
@@ -12,6 +12,10 @@ export class GroupService {
     async createGroup(input: CreateGroupInput): Promise<GroupSummary> {
         const group = await this.groupRepo.create(input);
         return group;
+    }
+    async createGroupWithMembers(input: CreateGroupWithMembersInput): Promise<GroupSummary> {
+        const groups = await this.groupRepo.createGroupWithMembers(input)
+        return groups
     }
 
     async findById(groupId: string): Promise<GroupSummary> {
@@ -36,7 +40,9 @@ export class GroupService {
         if (!group) throw new GroupNotFoundError();
         if (!member) throw new MemberNotFoundError();
     }
-
+    async addMembers(data: { groupId: string, memberId: string }[]): Promise<void> {
+        await this.groupRepo.addMembers(data);
+    }
     async addMember(groupId: string, memberId: string): Promise<void> {
         await this.ensureMemberAndGroupExist(groupId, memberId);
         const existing = await this.groupRepo.hasMember(groupId, memberId);
@@ -51,10 +57,6 @@ export class GroupService {
         if (!existing) throw new MemberNotInGroupError();
         await this.groupRepo.removeMember(groupId, memberId);
     }
-
-    async listGroups(): Promise<GroupSummary[]> {
-        return await this.groupRepo.listGroups();
-    }
     async getAllMembers(groupId: string): Promise<Member[]> {
         return this.groupRepo.listMembers(groupId);
     }
@@ -63,10 +65,13 @@ export class GroupService {
         if (!group) throw new GroupNotFoundError()
         this.groupRepo.delete(groupId);
     }
-    async listGroupsForMember(memberId: string): Promise<GroupSummary[]> {
+    async listGroupsForMember(memberId: string): Promise<GroupWithMembers[]> {
         const member = await this.memberService.findById(memberId);
+        console.log("control1", member)
         if (!member) throw new MemberNotFoundError;
+        console.log("control2")
         const groups = await this.groupRepo.listGroupsForMember(memberId);
+        console.log("control3", groups)
         return groups
     }
 

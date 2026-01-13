@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { verifyToken } from "../actions/auth";
 import { CreateGroupDialog } from "@/components/group/createGroupDialog";
+import { findGroups } from "../actions/group";
+import { GroupCard } from "@/components/group/groupCard";
 
 export default async function DashboardPage() {
     const cookieStore = await cookies();
@@ -15,6 +17,12 @@ export default async function DashboardPage() {
     if (!auth.success) redirect("/signin");
 
     const user = auth.data;
+
+    console.log("user: ", user);
+
+    const userGroups = (await findGroups(user.id)).data
+
+    console.log("groups: ", userGroups);
 
     const totalOwedToYou = 450.00;
     const totalYouOwe = 120.50;
@@ -79,9 +87,18 @@ export default async function DashboardPage() {
 
                 <section className="space-y-4">
                     <h2 className="text-xl font-semibold">Your Groups</h2>
-                    <div className="rounded-xl border border-white/10 p-4 text-sm text-muted-foreground text-center py-10">
-                        You haven't joined any groups yet.
-                    </div>
+
+                    {userGroups && userGroups.length > 0 ? (
+                        <div className="grid gap-4 sm:grid-cols-2">
+                            {userGroups.map((group) => (
+                                <GroupCard key={group.id} group={group} />
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="rounded-xl border border-white/10 p-4 text-sm text-muted-foreground text-center py-10">
+                            You haven't joined any groups yet.
+                        </div>
+                    )}
                 </section>
             </div>
 

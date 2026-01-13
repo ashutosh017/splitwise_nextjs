@@ -10,7 +10,7 @@ import { createGroup, findMatchingUsers } from "@/app/actions/group";
 import { Member } from "@/zod";
 
 export function CreateGroupDialog() {
-    const [members, setMembers] = useState<string[]>([]); // To track added members
+    const [members, setMembers] = useState<string[]>([]);
     const [open, setOpen] = useState(false);
     const [emailInput, setEmailInput] = useState("");
     const [suggestions, setSuggestions] = useState<Member[]>([]);
@@ -35,7 +35,7 @@ export function CreateGroupDialog() {
             } else {
                 setSuggestions([]);
             }
-        }, 300); // Debounce to prevent too many DB calls
+        }, 300);
 
         return () => clearTimeout(delayDebounceFn);
     }, [emailInput]);
@@ -78,6 +78,7 @@ export function CreateGroupDialog() {
                                 value={emailInput}
                                 onChange={(e) => setEmailInput(e.target.value)}
                                 placeholder="Enter email address"
+                                name="members"
                                 className="pl-8"
                             />
                             {emailInput && (

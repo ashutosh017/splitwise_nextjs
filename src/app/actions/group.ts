@@ -2,16 +2,52 @@
 import { groupService, memberService } from "@/di/container";
 import { ActionResponse, catchErrors } from "@/lib/action-wrapper";
 import { GroupSummary, Member } from "@/zod";
+import { getCurrentUser } from "./auth";
+import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 export async function createGroup(initialState: any, formData: FormData): Promise<ActionResponse<GroupSummary>> {
     return catchErrors(async () => {
+        const currentUser = await getCurrentUser();
+        if (!currentUser) redirect('/');
+
         const name = formData.get('name') as string;
-        const description = formData.get("description") as string
-        const groupSummary = await groupService.createGroup({
-            name, description
-        })
-        return groupSummary
-    })
+        const description = formData.get("description") as string;
+        const rawMembers = formData.get("members") as string;
+
+        const memberObjects = JSON.parse(rawMembers || "[]") as { email: string }[];
+        let emails = memberObjects.map(m => m.email);
+
+        if (!emails.includes(currentUser.email)) {
+            emails.push(currentUser.email);
+        }
+
+        const membersWithIds = await memberService.findManyByEmail(emails);
+
+        if (membersWithIds.length !== emails.length) {
+            throw new Error("One or more invited users do not have an account.");
+        }
+
+        const groupSummary = await groupService.createGroupWithMembers({
+            name,
+            description,
+            memberIds: membersWithIds.map((m) => m.id)
+        });
+
+        // revalidatePath('/dashboard');
+        console.log("control reached here: ", groupSummary)
+
+        return groupSummary;
+    });
+}
+
+export async function findGroups(memberId: string): Promise<ActionResponse<GroupSummary[] | null>> {
+    return catchErrors(async () => {
+        const groups = await groupService.listGroupsForMember(memberId)
+        console.log("grousp: ", groups)
+        return groups
+    }
+    )
 }
 
 export async function findMatchingUsers(keyword: string): Promise<ActionResponse<Member[] | null>> {

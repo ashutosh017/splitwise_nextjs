@@ -1,7 +1,7 @@
 import prisma from "../lib/prisma";
 import type { Member as PrismaMember } from '@/generated/prisma/client'
 import type { GroupRepository } from "../interfaces";
-import type { CreateGroupInput, GroupSummary, Member } from "../zod";
+import type { CreateGroupInput, CreateGroupWithMembersInput, GroupSummary, GroupWithMembers, Member } from "../zod";
 import type { Group as PrismaGroup } from '@/generated/prisma/client'
 
 export class PrismaGroupRepository implements GroupRepository {
@@ -10,6 +10,24 @@ export class PrismaGroupRepository implements GroupRepository {
             data: groupInput
         })
         return this.toSummary(group);
+    }
+    async createGroupWithMembers(input: CreateGroupWithMembersInput): Promise<GroupSummary> {
+        const group = await prisma.group.create({
+            data: {
+                name: input.name,
+                description: input.description,
+                members: {
+                    create: input.memberIds.map((id) => ({
+                        member: {
+                            connect: {
+                                id
+                            }
+                        }
+                    }))
+                }
+            }
+        })
+        return this.toSummary(group)
     }
     private toSummary(group: PrismaGroup): GroupSummary {
         return {
@@ -36,6 +54,9 @@ export class PrismaGroupRepository implements GroupRepository {
             }
         })
         return !!member
+    }
+    async addMembers(data: { groupId: string, memberId: string }[]): Promise<void> {
+        await prisma.groupMember.createMany({ data })
     }
     async addMember(groupId: string, memberId: string): Promise<void> {
         await prisma.groupMember.create({
@@ -84,17 +105,29 @@ export class PrismaGroupRepository implements GroupRepository {
         })
         return record.map((r) => this.toMember(r.member))
     }
-    async listGroupsForMember(memberId: string): Promise<GroupSummary[]> {
+    async listGroupsForMember(memberId: string): Promise<GroupWithMembers[]> {
         const groups = await prisma.groupMember.findMany({
             where: {
-                memberId: {
-                    not: memberId
+                memberId
+            }, select: {
+                group: {
+                    select:{
+                        id:true,
+                        name:true,
+                        description:true,
+                        members:{
+                            select:{
+                                id:true,
+                            }
+                        }
+                    }
                 }
-            }, include: {
-                group: true
             }
         })
-        return groups.map((g) => this.toSummary(g.group))
+        return groups.map((g) => ({
+            ...g.group,
+            description: g.group.description ?? ""
+        }))
     }
     async delete(groupId: string): Promise<void> {
         await prisma.group.delete({
