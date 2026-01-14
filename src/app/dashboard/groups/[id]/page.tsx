@@ -7,11 +7,11 @@ import { ExpenseList } from "@/components/group/exepenseList";
 import { MemberList } from "@/components/group/memberList";
 import { getGroupDetail } from "@/app/actions/group";
 import { AddExpenseDialog } from "@/components/group/addExpenseDialog";
+import { CreateExpense } from "@/app/actions/expense";
 
 
 export default async function GroupPage({ params }: { params: { id: string } }) {
-    const { id } = await params; // Next.js 15 params are async
-    console.log("idsdfafasf: ", id)
+    const { id } = await params;
     const user = await getCurrentUser();
     if (!user) redirect("/signin");
 
@@ -40,9 +40,9 @@ export default async function GroupPage({ params }: { params: { id: string } }) 
                         <p className="text-muted-foreground mt-1">{group.description}</p>
                     </div>
                     <div className="flex gap-2">
-                        <Button variant="outline" size="icon">
+                        {/* <Button variant="outline" size="icon">
                             <Settings className="h-4 w-4" />
-                        </Button>
+                        </Button> */}
                         <AddExpenseDialog group={group} />
                     </div>
                 </div>

@@ -44,7 +44,7 @@ export async function createGroup(initialState: any, formData: FormData): Promis
 export async function getGroupDetail(groupId: string): Promise<ActionResponse<any | null>> {
     return catchErrors(async () => {
         const group = await groupService.getGroupDetails(groupId)
-        return group
+        return JSON.parse(JSON.stringify(group))
     })
 }
 

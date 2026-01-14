@@ -16,7 +16,7 @@ export class SplitService {
         await this.deleteByExpenseId(expenseId, tx);
     }
     async createMany(input: CreateManySplitInput, tx?: Prisma.TransactionClient): Promise<void> {
-        await this.createMany(input, tx);
+        await this.splitRepo.createMany(input, tx);
     }
 
 }

@@ -1,14 +1,15 @@
 // @ts-nocheck
 'use client';
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useActionState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Receipt } from "lucide-react";
+import { CreateExpense } from "@/app/actions/expense";
+import { SplitType } from "@/zod";
 
-type SplitType = "EQUAL" | "PERCENTAGE" | "SHARE" | "AMOUNT";
 
 export function AddExpenseDialog({ group }: { group: any }) {
     const [open, setOpen] = useState(false);
@@ -17,19 +18,18 @@ export function AddExpenseDialog({ group }: { group: any }) {
     const [splitType, setSplitType] = useState<SplitType>("EQUAL");
     const [whoPaidId, setWhoPaidId] = useState<string>(group.members[0]?.member.id);
 
-    // Store individual split values (amount, percentage, or shares)
+    const [state, formAction, isPending] = useActionState(CreateExpense, null);
+
     const [splitValues, setSplitValues] = useState<Record<string, number>>(
         Object.fromEntries(group.members.map(m => [m.member.id, 0]))
     );
 
-    // Calculate how much each person owes based on SplitType
     const calculatedSplits = useMemo(() => {
         const memberCount = group.members.length;
         if (splitType === "EQUAL") {
             const equalShare = amount / (memberCount || 1);
             return group.members.map(m => ({ memberId: m.member.id, value: equalShare }));
         }
-        // For other types, we use the manual input values from splitValues state
         return group.members.map(m => ({
             memberId: m.member.id,
             value: splitValues[m.member.id] || 0
@@ -46,7 +46,7 @@ export function AddExpenseDialog({ group }: { group: any }) {
                     <DialogTitle>Add Expense</DialogTitle>
                 </DialogHeader>
 
-                <form className="space-y-4">
+                <form action={formAction} className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
                             <label className="text-sm font-medium">Description</label>
@@ -122,6 +122,7 @@ export function AddExpenseDialog({ group }: { group: any }) {
                     </div>
 
                     {/* Submit Data */}
+                    <input type="hidden" name="groupId" value={group.id} />
                     <input type="hidden" name="whoPaidId" value={whoPaidId} />
                     <input type="hidden" name="splitType" value={splitType} />
                     <input type="hidden" name="splits" value={JSON.stringify(calculatedSplits)} />

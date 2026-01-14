@@ -27,10 +27,12 @@ export function ExpenseList({ expenses }: ExpenseListProps) {
                         {/* Date Box */}
                         <div className="flex flex-col items-center justify-center w-12 h-12 rounded-lg bg-secondary text-muted-foreground">
                             <span className="text-[10px] uppercase font-bold">
-                                {format(new Date(expense.createdAt), "MMM")}
+                                {/* {format(new Date(expense.createdAt), "MMM")} */}
+                                {expense.createdAt}
                             </span>
                             <span className="text-lg font-bold leading-none">
-                                {format(new Date(expense.createdAt), "dd")}
+                                {/* {format(new Date(expense.createdAt), "dd")} */}
+                                {expense.createdAt}
                             </span>
                         </div>
 
@@ -40,7 +42,7 @@ export function ExpenseList({ expenses }: ExpenseListProps) {
                                 {expense.description}
                             </h3>
                             <p className="text-xs text-muted-foreground">
-                                Paid by <span className="font-semibold">{expense.createdBy.name}</span>
+                                Paid by <span className="font-semibold">{expense.whoPaid.name}</span>
                             </p>
                         </div>
                     </div>
@@ -48,7 +50,8 @@ export function ExpenseList({ expenses }: ExpenseListProps) {
                     {/* Amount Display */}
                     <div className="text-right">
                         <p className="text-sm font-bold text-foreground">
-                            ${expense.amount.toFixed(2)}
+                            {/* ${expense.amount.toFixed(2)} */}
+                            ${expense.amount}
                         </p>
                         <p className="text-[10px] text-muted-foreground uppercase tracking-wider">
                             Total Amount
