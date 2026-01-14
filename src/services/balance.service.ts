@@ -11,6 +11,18 @@ export class BalanceService {
         private readonly groupService: GroupService
     ) {
     }
+    async getTotalBalance(userId: string, groupId: string): Promise<number> {
+        const balances = await this.balanceRepo.getAllBalancesOfAUserInAGroup(userId, groupId);
+        let totalBalance = 0;
+        balances.forEach(b => {
+            if (b.fromMemberId)
+                totalBalance -= b.amount
+            else
+                totalBalance += b.amount
+
+        });
+        return totalBalance;
+    }
     async createOrUpdate(input: CreateBalanceInput): Promise<BalanceSummary> {
         if (input.amount < 0) throw new InvalidAmountError();
         const balance = await this.balanceRepo.upsert(input);

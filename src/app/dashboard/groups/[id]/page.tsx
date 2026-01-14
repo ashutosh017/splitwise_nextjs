@@ -5,7 +5,7 @@ import Link from "next/link";
 import { getCurrentUser } from "@/app/actions/auth";
 import { ExpenseList } from "@/components/group/exepenseList";
 import { MemberList } from "@/components/group/memberList";
-import { getGroupDetail } from "@/app/actions/group";
+import { getGroupDetail, getTotalBalanceInAGroup } from "@/app/actions/group";
 import { AddExpenseDialog } from "@/components/group/addExpenseDialog";
 import { CreateExpense } from "@/app/actions/expense";
 
@@ -22,6 +22,8 @@ export default async function GroupPage({ params }: { params: { id: string } }) 
     }
 
     if (!group) notFound();
+
+    const totalBalance = (await getTotalBalanceInAGroup(user.id, group.id)).data
 
     return (
         <div className="max-w-6xl mx-auto space-y-8 pb-20 pt-4">
@@ -70,7 +72,7 @@ export default async function GroupPage({ params }: { params: { id: string } }) 
                     {/* Quick Stats Card */}
                     <div className="rounded-xl bg-primary/5 border border-primary/20 p-6">
                         <h3 className="text-sm font-medium text-primary mb-1">Your total balance here</h3>
-                        <p className="text-2xl font-bold text-green-500">+$120.00</p>
+                        <p className="text-2xl font-bold text-green-500">${totalBalance}</p>
                     </div>
                 </div>
             </div>

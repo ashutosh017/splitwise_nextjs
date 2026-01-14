@@ -1,3 +1,4 @@
+import { balanceService } from "@/di/container";
 import { GroupNotFoundError, MemberAlreadyInGroupError, MemberNotFoundError, MemberNotInGroupError } from "../errors/errors";
 import type { GroupRepository } from "../interfaces";
 import type { CreateGroupInput, CreateGroupWithMembersInput, GroupSummary, GroupWithMembers, Member } from "../zod";
@@ -11,7 +12,6 @@ export class GroupService {
     }
     async getGroupDetails(groupId: string): Promise<any | null> {
         return this.groupRepo.getDetailedGroupData(groupId)
-
     }
     async createGroup(input: CreateGroupInput): Promise<GroupSummary> {
         const group = await this.groupRepo.create(input);

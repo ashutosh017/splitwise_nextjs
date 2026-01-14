@@ -8,6 +8,7 @@ export interface BalanceRepository {
         toMemberId: string
     ): Promise<BalanceSummary | null>
     upsert(input: CreateBalanceInput, tx?: Prisma.TransactionClient): Promise<BalanceSummary>
+    getAllBalancesOfAUserInAGroup(userId: string, groupId: string): Promise<BalanceSummary[]>
     increment(
         groupId: string,
         fromMemberId: string,

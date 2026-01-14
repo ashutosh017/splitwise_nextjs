@@ -1,5 +1,5 @@
 'use server'
-import { groupService, memberService } from "@/di/container";
+import { balanceService, groupService, memberService } from "@/di/container";
 import { ActionResponse, catchErrors } from "@/lib/action-wrapper";
 import { GroupSummary, GroupWithMembers, Member } from "@/zod";
 import { getCurrentUser } from "./auth";
@@ -56,7 +56,11 @@ export async function findGroups(memberId: string): Promise<ActionResponse<Group
     }
     )
 }
-
+export async function getTotalBalanceInAGroup(userId: string, groupId: string): Promise<ActionResponse<number>> {
+    return catchErrors(async () => {
+        return balanceService.getTotalBalance(userId, groupId);
+    })
+}
 export async function findMatchingUsers(keyword: string): Promise<ActionResponse<Member[] | null>> {
     return catchErrors(async () => {
         const users = await memberService.findFromKeyword(keyword)

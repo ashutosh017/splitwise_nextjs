@@ -29,6 +29,23 @@ export class PrismaBalanceRepository implements BalanceRepository {
         })
         return this.toSummary(balance);
     }
+    async getAllBalancesOfAUserInAGroup(userId: string, groupId: string): Promise<BalanceSummary[]> {
+        const balances = await prisma.balance.findMany({
+            where: {
+                OR: [
+                    {
+                        fromMemberId: userId
+                    },
+                    {
+                        toMemberId: userId
+                    }
+                ]
+                ,
+                groupId
+            }
+        })
+        return balances.map((b) => this.toSummary(b))
+    }
     async find(groupId: string, fromMemberId: string, toMemberId: string): Promise<BalanceSummary | null> {
         const balance = await prisma.balance.findUnique({
             where: {
