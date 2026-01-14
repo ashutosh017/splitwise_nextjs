@@ -40,6 +40,8 @@ export type BalanceMinAggregateOutputType = {
   groupId: string | null
   fromMemberId: string | null
   toMemberId: string | null
+  dateCreated: Date | null
+  updatedAt: Date | null
 }
 
 export type BalanceMaxAggregateOutputType = {
@@ -48,6 +50,8 @@ export type BalanceMaxAggregateOutputType = {
   groupId: string | null
   fromMemberId: string | null
   toMemberId: string | null
+  dateCreated: Date | null
+  updatedAt: Date | null
 }
 
 export type BalanceCountAggregateOutputType = {
@@ -56,6 +60,8 @@ export type BalanceCountAggregateOutputType = {
   groupId: number
   fromMemberId: number
   toMemberId: number
+  dateCreated: number
+  updatedAt: number
   _all: number
 }
 
@@ -74,6 +80,8 @@ export type BalanceMinAggregateInputType = {
   groupId?: true
   fromMemberId?: true
   toMemberId?: true
+  dateCreated?: true
+  updatedAt?: true
 }
 
 export type BalanceMaxAggregateInputType = {
@@ -82,6 +90,8 @@ export type BalanceMaxAggregateInputType = {
   groupId?: true
   fromMemberId?: true
   toMemberId?: true
+  dateCreated?: true
+  updatedAt?: true
 }
 
 export type BalanceCountAggregateInputType = {
@@ -90,6 +100,8 @@ export type BalanceCountAggregateInputType = {
   groupId?: true
   fromMemberId?: true
   toMemberId?: true
+  dateCreated?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -185,6 +197,8 @@ export type BalanceGroupByOutputType = {
   groupId: string
   fromMemberId: string
   toMemberId: string
+  dateCreated: Date
+  updatedAt: Date | null
   _count: BalanceCountAggregateOutputType | null
   _avg: BalanceAvgAggregateOutputType | null
   _sum: BalanceSumAggregateOutputType | null
@@ -216,6 +230,8 @@ export type BalanceWhereInput = {
   groupId?: Prisma.StringFilter<"Balance"> | string
   fromMemberId?: Prisma.StringFilter<"Balance"> | string
   toMemberId?: Prisma.StringFilter<"Balance"> | string
+  dateCreated?: Prisma.DateTimeFilter<"Balance"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableFilter<"Balance"> | Date | string | null
   group?: Prisma.XOR<Prisma.GroupScalarRelationFilter, Prisma.GroupWhereInput>
   from?: Prisma.XOR<Prisma.MemberScalarRelationFilter, Prisma.MemberWhereInput>
   to?: Prisma.XOR<Prisma.MemberScalarRelationFilter, Prisma.MemberWhereInput>
@@ -227,6 +243,8 @@ export type BalanceOrderByWithRelationInput = {
   groupId?: Prisma.SortOrder
   fromMemberId?: Prisma.SortOrder
   toMemberId?: Prisma.SortOrder
+  dateCreated?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   group?: Prisma.GroupOrderByWithRelationInput
   from?: Prisma.MemberOrderByWithRelationInput
   to?: Prisma.MemberOrderByWithRelationInput
@@ -242,6 +260,8 @@ export type BalanceWhereUniqueInput = Prisma.AtLeast<{
   groupId?: Prisma.StringFilter<"Balance"> | string
   fromMemberId?: Prisma.StringFilter<"Balance"> | string
   toMemberId?: Prisma.StringFilter<"Balance"> | string
+  dateCreated?: Prisma.DateTimeFilter<"Balance"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableFilter<"Balance"> | Date | string | null
   group?: Prisma.XOR<Prisma.GroupScalarRelationFilter, Prisma.GroupWhereInput>
   from?: Prisma.XOR<Prisma.MemberScalarRelationFilter, Prisma.MemberWhereInput>
   to?: Prisma.XOR<Prisma.MemberScalarRelationFilter, Prisma.MemberWhereInput>
@@ -253,6 +273,8 @@ export type BalanceOrderByWithAggregationInput = {
   groupId?: Prisma.SortOrder
   fromMemberId?: Prisma.SortOrder
   toMemberId?: Prisma.SortOrder
+  dateCreated?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.BalanceCountOrderByAggregateInput
   _avg?: Prisma.BalanceAvgOrderByAggregateInput
   _max?: Prisma.BalanceMaxOrderByAggregateInput
@@ -269,11 +291,15 @@ export type BalanceScalarWhereWithAggregatesInput = {
   groupId?: Prisma.StringWithAggregatesFilter<"Balance"> | string
   fromMemberId?: Prisma.StringWithAggregatesFilter<"Balance"> | string
   toMemberId?: Prisma.StringWithAggregatesFilter<"Balance"> | string
+  dateCreated?: Prisma.DateTimeWithAggregatesFilter<"Balance"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Balance"> | Date | string | null
 }
 
 export type BalanceCreateInput = {
   id?: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  dateCreated?: Date | string
+  updatedAt?: Date | string | null
   group: Prisma.GroupCreateNestedOneWithoutBalancesInput
   from: Prisma.MemberCreateNestedOneWithoutOwedInput
   to: Prisma.MemberCreateNestedOneWithoutOwnedInput
@@ -285,11 +311,15 @@ export type BalanceUncheckedCreateInput = {
   groupId: string
   fromMemberId: string
   toMemberId: string
+  dateCreated?: Date | string
+  updatedAt?: Date | string | null
 }
 
 export type BalanceUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   group?: Prisma.GroupUpdateOneRequiredWithoutBalancesNestedInput
   from?: Prisma.MemberUpdateOneRequiredWithoutOwedNestedInput
   to?: Prisma.MemberUpdateOneRequiredWithoutOwnedNestedInput
@@ -301,6 +331,8 @@ export type BalanceUncheckedUpdateInput = {
   groupId?: Prisma.StringFieldUpdateOperationsInput | string
   fromMemberId?: Prisma.StringFieldUpdateOperationsInput | string
   toMemberId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type BalanceCreateManyInput = {
@@ -309,11 +341,15 @@ export type BalanceCreateManyInput = {
   groupId: string
   fromMemberId: string
   toMemberId: string
+  dateCreated?: Date | string
+  updatedAt?: Date | string | null
 }
 
 export type BalanceUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type BalanceUncheckedUpdateManyInput = {
@@ -322,6 +358,8 @@ export type BalanceUncheckedUpdateManyInput = {
   groupId?: Prisma.StringFieldUpdateOperationsInput | string
   fromMemberId?: Prisma.StringFieldUpdateOperationsInput | string
   toMemberId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type BalanceListRelationFilter = {
@@ -346,6 +384,8 @@ export type BalanceCountOrderByAggregateInput = {
   groupId?: Prisma.SortOrder
   fromMemberId?: Prisma.SortOrder
   toMemberId?: Prisma.SortOrder
+  dateCreated?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type BalanceAvgOrderByAggregateInput = {
@@ -358,6 +398,8 @@ export type BalanceMaxOrderByAggregateInput = {
   groupId?: Prisma.SortOrder
   fromMemberId?: Prisma.SortOrder
   toMemberId?: Prisma.SortOrder
+  dateCreated?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type BalanceMinOrderByAggregateInput = {
@@ -366,6 +408,8 @@ export type BalanceMinOrderByAggregateInput = {
   groupId?: Prisma.SortOrder
   fromMemberId?: Prisma.SortOrder
   toMemberId?: Prisma.SortOrder
+  dateCreated?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type BalanceSumOrderByAggregateInput = {
@@ -501,6 +545,8 @@ export type BalanceUncheckedUpdateManyWithoutGroupNestedInput = {
 export type BalanceCreateWithoutToInput = {
   id?: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  dateCreated?: Date | string
+  updatedAt?: Date | string | null
   group: Prisma.GroupCreateNestedOneWithoutBalancesInput
   from: Prisma.MemberCreateNestedOneWithoutOwedInput
 }
@@ -510,6 +556,8 @@ export type BalanceUncheckedCreateWithoutToInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   groupId: string
   fromMemberId: string
+  dateCreated?: Date | string
+  updatedAt?: Date | string | null
 }
 
 export type BalanceCreateOrConnectWithoutToInput = {
@@ -525,6 +573,8 @@ export type BalanceCreateManyToInputEnvelope = {
 export type BalanceCreateWithoutFromInput = {
   id?: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  dateCreated?: Date | string
+  updatedAt?: Date | string | null
   group: Prisma.GroupCreateNestedOneWithoutBalancesInput
   to: Prisma.MemberCreateNestedOneWithoutOwnedInput
 }
@@ -534,6 +584,8 @@ export type BalanceUncheckedCreateWithoutFromInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   groupId: string
   toMemberId: string
+  dateCreated?: Date | string
+  updatedAt?: Date | string | null
 }
 
 export type BalanceCreateOrConnectWithoutFromInput = {
@@ -571,6 +623,8 @@ export type BalanceScalarWhereInput = {
   groupId?: Prisma.StringFilter<"Balance"> | string
   fromMemberId?: Prisma.StringFilter<"Balance"> | string
   toMemberId?: Prisma.StringFilter<"Balance"> | string
+  dateCreated?: Prisma.DateTimeFilter<"Balance"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableFilter<"Balance"> | Date | string | null
 }
 
 export type BalanceUpsertWithWhereUniqueWithoutFromInput = {
@@ -592,6 +646,8 @@ export type BalanceUpdateManyWithWhereWithoutFromInput = {
 export type BalanceCreateWithoutGroupInput = {
   id?: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  dateCreated?: Date | string
+  updatedAt?: Date | string | null
   from: Prisma.MemberCreateNestedOneWithoutOwedInput
   to: Prisma.MemberCreateNestedOneWithoutOwnedInput
 }
@@ -601,6 +657,8 @@ export type BalanceUncheckedCreateWithoutGroupInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   fromMemberId: string
   toMemberId: string
+  dateCreated?: Date | string
+  updatedAt?: Date | string | null
 }
 
 export type BalanceCreateOrConnectWithoutGroupInput = {
@@ -634,6 +692,8 @@ export type BalanceCreateManyToInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   groupId: string
   fromMemberId: string
+  dateCreated?: Date | string
+  updatedAt?: Date | string | null
 }
 
 export type BalanceCreateManyFromInput = {
@@ -641,11 +701,15 @@ export type BalanceCreateManyFromInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   groupId: string
   toMemberId: string
+  dateCreated?: Date | string
+  updatedAt?: Date | string | null
 }
 
 export type BalanceUpdateWithoutToInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   group?: Prisma.GroupUpdateOneRequiredWithoutBalancesNestedInput
   from?: Prisma.MemberUpdateOneRequiredWithoutOwedNestedInput
 }
@@ -655,6 +719,8 @@ export type BalanceUncheckedUpdateWithoutToInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   groupId?: Prisma.StringFieldUpdateOperationsInput | string
   fromMemberId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type BalanceUncheckedUpdateManyWithoutToInput = {
@@ -662,11 +728,15 @@ export type BalanceUncheckedUpdateManyWithoutToInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   groupId?: Prisma.StringFieldUpdateOperationsInput | string
   fromMemberId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type BalanceUpdateWithoutFromInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   group?: Prisma.GroupUpdateOneRequiredWithoutBalancesNestedInput
   to?: Prisma.MemberUpdateOneRequiredWithoutOwnedNestedInput
 }
@@ -676,6 +746,8 @@ export type BalanceUncheckedUpdateWithoutFromInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   groupId?: Prisma.StringFieldUpdateOperationsInput | string
   toMemberId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type BalanceUncheckedUpdateManyWithoutFromInput = {
@@ -683,6 +755,8 @@ export type BalanceUncheckedUpdateManyWithoutFromInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   groupId?: Prisma.StringFieldUpdateOperationsInput | string
   toMemberId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type BalanceCreateManyGroupInput = {
@@ -690,11 +764,15 @@ export type BalanceCreateManyGroupInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   fromMemberId: string
   toMemberId: string
+  dateCreated?: Date | string
+  updatedAt?: Date | string | null
 }
 
 export type BalanceUpdateWithoutGroupInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   from?: Prisma.MemberUpdateOneRequiredWithoutOwedNestedInput
   to?: Prisma.MemberUpdateOneRequiredWithoutOwnedNestedInput
 }
@@ -704,6 +782,8 @@ export type BalanceUncheckedUpdateWithoutGroupInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fromMemberId?: Prisma.StringFieldUpdateOperationsInput | string
   toMemberId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type BalanceUncheckedUpdateManyWithoutGroupInput = {
@@ -711,6 +791,8 @@ export type BalanceUncheckedUpdateManyWithoutGroupInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fromMemberId?: Prisma.StringFieldUpdateOperationsInput | string
   toMemberId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -721,6 +803,8 @@ export type BalanceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   groupId?: boolean
   fromMemberId?: boolean
   toMemberId?: boolean
+  dateCreated?: boolean
+  updatedAt?: boolean
   group?: boolean | Prisma.GroupDefaultArgs<ExtArgs>
   from?: boolean | Prisma.MemberDefaultArgs<ExtArgs>
   to?: boolean | Prisma.MemberDefaultArgs<ExtArgs>
@@ -732,6 +816,8 @@ export type BalanceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   groupId?: boolean
   fromMemberId?: boolean
   toMemberId?: boolean
+  dateCreated?: boolean
+  updatedAt?: boolean
   group?: boolean | Prisma.GroupDefaultArgs<ExtArgs>
   from?: boolean | Prisma.MemberDefaultArgs<ExtArgs>
   to?: boolean | Prisma.MemberDefaultArgs<ExtArgs>
@@ -743,6 +829,8 @@ export type BalanceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   groupId?: boolean
   fromMemberId?: boolean
   toMemberId?: boolean
+  dateCreated?: boolean
+  updatedAt?: boolean
   group?: boolean | Prisma.GroupDefaultArgs<ExtArgs>
   from?: boolean | Prisma.MemberDefaultArgs<ExtArgs>
   to?: boolean | Prisma.MemberDefaultArgs<ExtArgs>
@@ -754,9 +842,11 @@ export type BalanceSelectScalar = {
   groupId?: boolean
   fromMemberId?: boolean
   toMemberId?: boolean
+  dateCreated?: boolean
+  updatedAt?: boolean
 }
 
-export type BalanceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "amount" | "groupId" | "fromMemberId" | "toMemberId", ExtArgs["result"]["balance"]>
+export type BalanceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "amount" | "groupId" | "fromMemberId" | "toMemberId" | "dateCreated" | "updatedAt", ExtArgs["result"]["balance"]>
 export type BalanceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   group?: boolean | Prisma.GroupDefaultArgs<ExtArgs>
   from?: boolean | Prisma.MemberDefaultArgs<ExtArgs>
@@ -786,6 +876,8 @@ export type $BalancePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     groupId: string
     fromMemberId: string
     toMemberId: string
+    dateCreated: Date
+    updatedAt: Date | null
   }, ExtArgs["result"]["balance"]>
   composites: {}
 }
@@ -1217,6 +1309,8 @@ export interface BalanceFieldRefs {
   readonly groupId: Prisma.FieldRef<"Balance", 'String'>
   readonly fromMemberId: Prisma.FieldRef<"Balance", 'String'>
   readonly toMemberId: Prisma.FieldRef<"Balance", 'String'>
+  readonly dateCreated: Prisma.FieldRef<"Balance", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Balance", 'DateTime'>
 }
     
 

@@ -14,8 +14,11 @@ export default async function GroupPage({ params }: { params: { id: string } }) 
     const user = await getCurrentUser();
     if (!user) redirect("/signin");
 
-    // Fetch group with members and expenses
     const group = (await getGroupDetail(id)).data
+    if (group.error) {
+        console.log("error: ", group.error)
+        return;
+    }
 
     if (!group) notFound();
 
@@ -52,8 +55,7 @@ export default async function GroupPage({ params }: { params: { id: string } }) 
                     <div className="flex items-center justify-between">
                         <h2 className="text-xl font-semibold">Recent Expenses</h2>
                     </div>
-                    {/* <ExpenseList expenses={group.expenses} /> */}
-                    <ExpenseList expenses={['10']} />
+                    <ExpenseList expenses={group.expenses} />
                 </div>
 
                 {/* Sidebar: Members & Balances */}
@@ -63,8 +65,7 @@ export default async function GroupPage({ params }: { params: { id: string } }) 
                             <Users className="h-5 w-5 text-primary" />
                             <h2 className="font-semibold text-lg">Group Members</h2>
                         </div>
-                        {/* <MemberList members={group.members} /> */}
-                        <MemberList members={['m1']} />
+                        <MemberList members={group.members} />
                     </div>
 
                     {/* Quick Stats Card */}

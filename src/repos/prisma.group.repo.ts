@@ -1,7 +1,7 @@
 import prisma from "../lib/prisma";
 import type { Member as PrismaMember } from '@/generated/prisma/client'
 import type { GroupRepository } from "../interfaces";
-import type { CreateGroupInput, CreateGroupWithMembersInput, GroupSummary, GroupWithMembers, Member } from "../zod";
+import type { CreateGroupInput, CreateGroupWithMembersInput, DetailedGroupResponse, GroupSummary, GroupWithMembers, Member } from "../zod";
 import type { Group as PrismaGroup } from '@/generated/prisma/client'
 
 export class PrismaGroupRepository implements GroupRepository {
@@ -35,6 +35,94 @@ export class PrismaGroupRepository implements GroupRepository {
             name: group.name,
             description: group.description ?? ""
         }
+    }
+    async getDetailedGroupData(groupId: string): Promise<any | null> {
+        if (!groupId) return null;
+        return prisma.group.findUnique({
+            where: {
+                id: groupId
+            },
+            select: {
+                id: true,
+                name: true,
+                description: true,
+                balances: {
+                    select: {
+                        id: true,
+                        amount: true,
+                        from: {
+                            select: {
+                                id: true,
+                                email: true,
+                                name: true
+                            }
+                        },
+                        to: {
+                            select: {
+                                id: true,
+                                email: true,
+                                name: true
+                            }
+                        },
+                        updatedAt: true,
+                        dateCreated: true
+                    }
+                },
+                expenses: {
+                    select: {
+                        id: true,
+                        amount: true,
+                        description: true,
+                        whoPaid: {
+                            select: {
+                                id: true,
+                                email: true,
+                                name: true
+                            }
+                        },
+                        splitType: true,
+                        splits: {
+                            select: {
+                                value: true,
+                                member: {
+                                    select: {
+                                        id: true,
+                                        name: true,
+                                        email: true
+                                    }
+                                },
+                                dateCreated: true,
+                                updatedAt: true
+                            }
+                        },
+                        dateCreated: true,
+                        updatedAt: true
+                    },
+                    orderBy: { dateCreated: 'desc' },
+                    take: 25
+                },
+                members: {// GroupMmeber[] -> junction table 
+                    select: {
+                        member: {
+                            select: {
+                                id: true,
+                                email: true,
+                                name: true
+                            }
+                        }
+                    }
+                },
+                dateCreated: true,
+                updatedAt: true,
+                _count: {
+                    select: {
+                        members: true,
+                        balances: true,
+                        expenses: true
+                    }
+                }
+            }
+        })
     }
     async findById(groupId: string): Promise<GroupSummary | null> {
         if (!groupId) return null;

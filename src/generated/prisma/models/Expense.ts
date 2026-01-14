@@ -40,6 +40,8 @@ export type ExpenseMinAggregateOutputType = {
   amount: runtime.Decimal | null
   groupId: string | null
   whoPaidId: string | null
+  dateCreated: Date | null
+  updatedAt: Date | null
   splitType: $Enums.SplitType | null
 }
 
@@ -49,6 +51,8 @@ export type ExpenseMaxAggregateOutputType = {
   amount: runtime.Decimal | null
   groupId: string | null
   whoPaidId: string | null
+  dateCreated: Date | null
+  updatedAt: Date | null
   splitType: $Enums.SplitType | null
 }
 
@@ -58,6 +62,8 @@ export type ExpenseCountAggregateOutputType = {
   amount: number
   groupId: number
   whoPaidId: number
+  dateCreated: number
+  updatedAt: number
   splitType: number
   _all: number
 }
@@ -77,6 +83,8 @@ export type ExpenseMinAggregateInputType = {
   amount?: true
   groupId?: true
   whoPaidId?: true
+  dateCreated?: true
+  updatedAt?: true
   splitType?: true
 }
 
@@ -86,6 +94,8 @@ export type ExpenseMaxAggregateInputType = {
   amount?: true
   groupId?: true
   whoPaidId?: true
+  dateCreated?: true
+  updatedAt?: true
   splitType?: true
 }
 
@@ -95,6 +105,8 @@ export type ExpenseCountAggregateInputType = {
   amount?: true
   groupId?: true
   whoPaidId?: true
+  dateCreated?: true
+  updatedAt?: true
   splitType?: true
   _all?: true
 }
@@ -191,6 +203,8 @@ export type ExpenseGroupByOutputType = {
   amount: runtime.Decimal
   groupId: string
   whoPaidId: string
+  dateCreated: Date
+  updatedAt: Date | null
   splitType: $Enums.SplitType
   _count: ExpenseCountAggregateOutputType | null
   _avg: ExpenseAvgAggregateOutputType | null
@@ -223,6 +237,8 @@ export type ExpenseWhereInput = {
   amount?: Prisma.DecimalFilter<"Expense"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   groupId?: Prisma.StringFilter<"Expense"> | string
   whoPaidId?: Prisma.StringFilter<"Expense"> | string
+  dateCreated?: Prisma.DateTimeFilter<"Expense"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableFilter<"Expense"> | Date | string | null
   splitType?: Prisma.EnumSplitTypeFilter<"Expense"> | $Enums.SplitType
   group?: Prisma.XOR<Prisma.GroupScalarRelationFilter, Prisma.GroupWhereInput>
   whoPaid?: Prisma.XOR<Prisma.MemberScalarRelationFilter, Prisma.MemberWhereInput>
@@ -235,6 +251,8 @@ export type ExpenseOrderByWithRelationInput = {
   amount?: Prisma.SortOrder
   groupId?: Prisma.SortOrder
   whoPaidId?: Prisma.SortOrder
+  dateCreated?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   splitType?: Prisma.SortOrder
   group?: Prisma.GroupOrderByWithRelationInput
   whoPaid?: Prisma.MemberOrderByWithRelationInput
@@ -250,6 +268,8 @@ export type ExpenseWhereUniqueInput = Prisma.AtLeast<{
   amount?: Prisma.DecimalFilter<"Expense"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   groupId?: Prisma.StringFilter<"Expense"> | string
   whoPaidId?: Prisma.StringFilter<"Expense"> | string
+  dateCreated?: Prisma.DateTimeFilter<"Expense"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableFilter<"Expense"> | Date | string | null
   splitType?: Prisma.EnumSplitTypeFilter<"Expense"> | $Enums.SplitType
   group?: Prisma.XOR<Prisma.GroupScalarRelationFilter, Prisma.GroupWhereInput>
   whoPaid?: Prisma.XOR<Prisma.MemberScalarRelationFilter, Prisma.MemberWhereInput>
@@ -262,6 +282,8 @@ export type ExpenseOrderByWithAggregationInput = {
   amount?: Prisma.SortOrder
   groupId?: Prisma.SortOrder
   whoPaidId?: Prisma.SortOrder
+  dateCreated?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   splitType?: Prisma.SortOrder
   _count?: Prisma.ExpenseCountOrderByAggregateInput
   _avg?: Prisma.ExpenseAvgOrderByAggregateInput
@@ -279,6 +301,8 @@ export type ExpenseScalarWhereWithAggregatesInput = {
   amount?: Prisma.DecimalWithAggregatesFilter<"Expense"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   groupId?: Prisma.StringWithAggregatesFilter<"Expense"> | string
   whoPaidId?: Prisma.StringWithAggregatesFilter<"Expense"> | string
+  dateCreated?: Prisma.DateTimeWithAggregatesFilter<"Expense"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Expense"> | Date | string | null
   splitType?: Prisma.EnumSplitTypeWithAggregatesFilter<"Expense"> | $Enums.SplitType
 }
 
@@ -286,6 +310,8 @@ export type ExpenseCreateInput = {
   id?: string
   description?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  dateCreated?: Date | string
+  updatedAt?: Date | string | null
   splitType: $Enums.SplitType
   group: Prisma.GroupCreateNestedOneWithoutExpensesInput
   whoPaid: Prisma.MemberCreateNestedOneWithoutExpensesInput
@@ -298,6 +324,8 @@ export type ExpenseUncheckedCreateInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   groupId: string
   whoPaidId: string
+  dateCreated?: Date | string
+  updatedAt?: Date | string | null
   splitType: $Enums.SplitType
   splits?: Prisma.SplitUncheckedCreateNestedManyWithoutExpenseInput
 }
@@ -306,6 +334,8 @@ export type ExpenseUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType
   group?: Prisma.GroupUpdateOneRequiredWithoutExpensesNestedInput
   whoPaid?: Prisma.MemberUpdateOneRequiredWithoutExpensesNestedInput
@@ -318,6 +348,8 @@ export type ExpenseUncheckedUpdateInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   groupId?: Prisma.StringFieldUpdateOperationsInput | string
   whoPaidId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType
   splits?: Prisma.SplitUncheckedUpdateManyWithoutExpenseNestedInput
 }
@@ -328,6 +360,8 @@ export type ExpenseCreateManyInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   groupId: string
   whoPaidId: string
+  dateCreated?: Date | string
+  updatedAt?: Date | string | null
   splitType: $Enums.SplitType
 }
 
@@ -335,6 +369,8 @@ export type ExpenseUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType
 }
 
@@ -344,6 +380,8 @@ export type ExpenseUncheckedUpdateManyInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   groupId?: Prisma.StringFieldUpdateOperationsInput | string
   whoPaidId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType
 }
 
@@ -363,6 +401,8 @@ export type ExpenseCountOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   groupId?: Prisma.SortOrder
   whoPaidId?: Prisma.SortOrder
+  dateCreated?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   splitType?: Prisma.SortOrder
 }
 
@@ -376,6 +416,8 @@ export type ExpenseMaxOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   groupId?: Prisma.SortOrder
   whoPaidId?: Prisma.SortOrder
+  dateCreated?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   splitType?: Prisma.SortOrder
 }
 
@@ -385,6 +427,8 @@ export type ExpenseMinOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   groupId?: Prisma.SortOrder
   whoPaidId?: Prisma.SortOrder
+  dateCreated?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   splitType?: Prisma.SortOrder
 }
 
@@ -511,6 +555,8 @@ export type ExpenseCreateWithoutWhoPaidInput = {
   id?: string
   description?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  dateCreated?: Date | string
+  updatedAt?: Date | string | null
   splitType: $Enums.SplitType
   group: Prisma.GroupCreateNestedOneWithoutExpensesInput
   splits?: Prisma.SplitCreateNestedManyWithoutExpenseInput
@@ -521,6 +567,8 @@ export type ExpenseUncheckedCreateWithoutWhoPaidInput = {
   description?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   groupId: string
+  dateCreated?: Date | string
+  updatedAt?: Date | string | null
   splitType: $Enums.SplitType
   splits?: Prisma.SplitUncheckedCreateNestedManyWithoutExpenseInput
 }
@@ -560,6 +608,8 @@ export type ExpenseScalarWhereInput = {
   amount?: Prisma.DecimalFilter<"Expense"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   groupId?: Prisma.StringFilter<"Expense"> | string
   whoPaidId?: Prisma.StringFilter<"Expense"> | string
+  dateCreated?: Prisma.DateTimeFilter<"Expense"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableFilter<"Expense"> | Date | string | null
   splitType?: Prisma.EnumSplitTypeFilter<"Expense"> | $Enums.SplitType
 }
 
@@ -567,6 +617,8 @@ export type ExpenseCreateWithoutGroupInput = {
   id?: string
   description?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  dateCreated?: Date | string
+  updatedAt?: Date | string | null
   splitType: $Enums.SplitType
   whoPaid: Prisma.MemberCreateNestedOneWithoutExpensesInput
   splits?: Prisma.SplitCreateNestedManyWithoutExpenseInput
@@ -577,6 +629,8 @@ export type ExpenseUncheckedCreateWithoutGroupInput = {
   description?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   whoPaidId: string
+  dateCreated?: Date | string
+  updatedAt?: Date | string | null
   splitType: $Enums.SplitType
   splits?: Prisma.SplitUncheckedCreateNestedManyWithoutExpenseInput
 }
@@ -611,6 +665,8 @@ export type ExpenseCreateWithoutSplitsInput = {
   id?: string
   description?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  dateCreated?: Date | string
+  updatedAt?: Date | string | null
   splitType: $Enums.SplitType
   group: Prisma.GroupCreateNestedOneWithoutExpensesInput
   whoPaid: Prisma.MemberCreateNestedOneWithoutExpensesInput
@@ -622,6 +678,8 @@ export type ExpenseUncheckedCreateWithoutSplitsInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   groupId: string
   whoPaidId: string
+  dateCreated?: Date | string
+  updatedAt?: Date | string | null
   splitType: $Enums.SplitType
 }
 
@@ -645,6 +703,8 @@ export type ExpenseUpdateWithoutSplitsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType
   group?: Prisma.GroupUpdateOneRequiredWithoutExpensesNestedInput
   whoPaid?: Prisma.MemberUpdateOneRequiredWithoutExpensesNestedInput
@@ -656,6 +716,8 @@ export type ExpenseUncheckedUpdateWithoutSplitsInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   groupId?: Prisma.StringFieldUpdateOperationsInput | string
   whoPaidId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType
 }
 
@@ -664,6 +726,8 @@ export type ExpenseCreateManyWhoPaidInput = {
   description?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   groupId: string
+  dateCreated?: Date | string
+  updatedAt?: Date | string | null
   splitType: $Enums.SplitType
 }
 
@@ -671,6 +735,8 @@ export type ExpenseUpdateWithoutWhoPaidInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType
   group?: Prisma.GroupUpdateOneRequiredWithoutExpensesNestedInput
   splits?: Prisma.SplitUpdateManyWithoutExpenseNestedInput
@@ -681,6 +747,8 @@ export type ExpenseUncheckedUpdateWithoutWhoPaidInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   groupId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType
   splits?: Prisma.SplitUncheckedUpdateManyWithoutExpenseNestedInput
 }
@@ -690,6 +758,8 @@ export type ExpenseUncheckedUpdateManyWithoutWhoPaidInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   groupId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType
 }
 
@@ -698,6 +768,8 @@ export type ExpenseCreateManyGroupInput = {
   description?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   whoPaidId: string
+  dateCreated?: Date | string
+  updatedAt?: Date | string | null
   splitType: $Enums.SplitType
 }
 
@@ -705,6 +777,8 @@ export type ExpenseUpdateWithoutGroupInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType
   whoPaid?: Prisma.MemberUpdateOneRequiredWithoutExpensesNestedInput
   splits?: Prisma.SplitUpdateManyWithoutExpenseNestedInput
@@ -715,6 +789,8 @@ export type ExpenseUncheckedUpdateWithoutGroupInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   whoPaidId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType
   splits?: Prisma.SplitUncheckedUpdateManyWithoutExpenseNestedInput
 }
@@ -724,6 +800,8 @@ export type ExpenseUncheckedUpdateManyWithoutGroupInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   whoPaidId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   splitType?: Prisma.EnumSplitTypeFieldUpdateOperationsInput | $Enums.SplitType
 }
 
@@ -764,6 +842,8 @@ export type ExpenseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   amount?: boolean
   groupId?: boolean
   whoPaidId?: boolean
+  dateCreated?: boolean
+  updatedAt?: boolean
   splitType?: boolean
   group?: boolean | Prisma.GroupDefaultArgs<ExtArgs>
   whoPaid?: boolean | Prisma.MemberDefaultArgs<ExtArgs>
@@ -777,6 +857,8 @@ export type ExpenseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   amount?: boolean
   groupId?: boolean
   whoPaidId?: boolean
+  dateCreated?: boolean
+  updatedAt?: boolean
   splitType?: boolean
   group?: boolean | Prisma.GroupDefaultArgs<ExtArgs>
   whoPaid?: boolean | Prisma.MemberDefaultArgs<ExtArgs>
@@ -788,6 +870,8 @@ export type ExpenseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   amount?: boolean
   groupId?: boolean
   whoPaidId?: boolean
+  dateCreated?: boolean
+  updatedAt?: boolean
   splitType?: boolean
   group?: boolean | Prisma.GroupDefaultArgs<ExtArgs>
   whoPaid?: boolean | Prisma.MemberDefaultArgs<ExtArgs>
@@ -799,10 +883,12 @@ export type ExpenseSelectScalar = {
   amount?: boolean
   groupId?: boolean
   whoPaidId?: boolean
+  dateCreated?: boolean
+  updatedAt?: boolean
   splitType?: boolean
 }
 
-export type ExpenseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "description" | "amount" | "groupId" | "whoPaidId" | "splitType", ExtArgs["result"]["expense"]>
+export type ExpenseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "description" | "amount" | "groupId" | "whoPaidId" | "dateCreated" | "updatedAt" | "splitType", ExtArgs["result"]["expense"]>
 export type ExpenseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   group?: boolean | Prisma.GroupDefaultArgs<ExtArgs>
   whoPaid?: boolean | Prisma.MemberDefaultArgs<ExtArgs>
@@ -831,6 +917,8 @@ export type $ExpensePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     amount: runtime.Decimal
     groupId: string
     whoPaidId: string
+    dateCreated: Date
+    updatedAt: Date | null
     splitType: $Enums.SplitType
   }, ExtArgs["result"]["expense"]>
   composites: {}
@@ -1263,6 +1351,8 @@ export interface ExpenseFieldRefs {
   readonly amount: Prisma.FieldRef<"Expense", 'Decimal'>
   readonly groupId: Prisma.FieldRef<"Expense", 'String'>
   readonly whoPaidId: Prisma.FieldRef<"Expense", 'String'>
+  readonly dateCreated: Prisma.FieldRef<"Expense", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Expense", 'DateTime'>
   readonly splitType: Prisma.FieldRef<"Expense", 'SplitType'>
 }
     

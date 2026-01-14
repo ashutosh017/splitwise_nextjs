@@ -9,8 +9,8 @@ export class GroupService {
         private readonly memberService: MemberService,
     ) {
     }
-    async getGroupDetails(groupId: string): Promise<GroupSummary | null> {
-        return this.groupRepo.findById(groupId)
+    async getGroupDetails(groupId: string): Promise<any | null> {
+        return this.groupRepo.getDetailedGroupData(groupId)
 
     }
     async createGroup(input: CreateGroupInput): Promise<GroupSummary> {

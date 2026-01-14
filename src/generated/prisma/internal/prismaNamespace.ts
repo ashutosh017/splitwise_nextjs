@@ -906,7 +906,9 @@ export type MemberScalarFieldEnum = (typeof MemberScalarFieldEnum)[keyof typeof 
 export const GroupScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  description: 'description'
+  description: 'description',
+  dateCreated: 'dateCreated',
+  updatedAt: 'updatedAt'
 } as const
 
 export type GroupScalarFieldEnum = (typeof GroupScalarFieldEnum)[keyof typeof GroupScalarFieldEnum]
@@ -915,7 +917,8 @@ export type GroupScalarFieldEnum = (typeof GroupScalarFieldEnum)[keyof typeof Gr
 export const GroupMemberScalarFieldEnum = {
   id: 'id',
   memberId: 'memberId',
-  groupId: 'groupId'
+  groupId: 'groupId',
+  addedAt: 'addedAt'
 } as const
 
 export type GroupMemberScalarFieldEnum = (typeof GroupMemberScalarFieldEnum)[keyof typeof GroupMemberScalarFieldEnum]
@@ -927,6 +930,8 @@ export const ExpenseScalarFieldEnum = {
   amount: 'amount',
   groupId: 'groupId',
   whoPaidId: 'whoPaidId',
+  dateCreated: 'dateCreated',
+  updatedAt: 'updatedAt',
   splitType: 'splitType'
 } as const
 
@@ -937,7 +942,9 @@ export const SplitScalarFieldEnum = {
   id: 'id',
   value: 'value',
   expenseId: 'expenseId',
-  memberId: 'memberId'
+  memberId: 'memberId',
+  dateCreated: 'dateCreated',
+  updatedAt: 'updatedAt'
 } as const
 
 export type SplitScalarFieldEnum = (typeof SplitScalarFieldEnum)[keyof typeof SplitScalarFieldEnum]
@@ -948,7 +955,9 @@ export const BalanceScalarFieldEnum = {
   amount: 'amount',
   groupId: 'groupId',
   fromMemberId: 'fromMemberId',
-  toMemberId: 'toMemberId'
+  toMemberId: 'toMemberId',
+  dateCreated: 'dateCreated',
+  updatedAt: 'updatedAt'
 } as const
 
 export type BalanceScalarFieldEnum = (typeof BalanceScalarFieldEnum)[keyof typeof BalanceScalarFieldEnum]

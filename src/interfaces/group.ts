@@ -4,6 +4,7 @@ export interface GroupRepository {
     create(data: CreateGroupInput): Promise<GroupSummary>
     createGroupWithMembers(input: CreateGroupWithMembersInput): Promise<GroupSummary>
     findById(groupId: string): Promise<GroupSummary | null>
+    getDetailedGroupData(groupId: string): Promise<any | null>
     hasMember(groupId: string, memberId: string): Promise<boolean>
     addMember(groupId: string, memberId: string): Promise<void>
     addMembers(data: { groupId: string, memberId: string }[]): Promise<void>
