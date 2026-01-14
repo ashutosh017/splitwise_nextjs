@@ -6,6 +6,7 @@ import { getCurrentUser } from "@/app/actions/auth";
 import { ExpenseList } from "@/components/group/exepenseList";
 import { MemberList } from "@/components/group/memberList";
 import { getGroupDetail } from "@/app/actions/group";
+import { AddExpenseDialog } from "@/components/group/addExpenseDialog";
 
 
 export default async function GroupPage({ params }: { params: { id: string } }) {
@@ -23,7 +24,7 @@ export default async function GroupPage({ params }: { params: { id: string } }) 
     if (!group) notFound();
 
     return (
-        <div className="max-w-6xl mx-auto space-y-8 pb-20">
+        <div className="max-w-6xl mx-auto space-y-8 pb-20 pt-4">
             {/* Navigation & Header */}
             <div className="flex flex-col gap-4">
                 <Link
@@ -42,9 +43,7 @@ export default async function GroupPage({ params }: { params: { id: string } }) 
                         <Button variant="outline" size="icon">
                             <Settings className="h-4 w-4" />
                         </Button>
-                        <Button>
-                            <Receipt className="mr-2 h-4 w-4" /> Add Expense
-                        </Button>
+                        <AddExpenseDialog group={group} />
                     </div>
                 </div>
             </div>

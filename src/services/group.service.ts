@@ -9,7 +9,7 @@ export class GroupService {
         private readonly memberService: MemberService,
     ) {
     }
-    async getGroupDetails(groupId: string): Promise<any | null> {
+    async xgetGroupDetails(groupId: string): Promise<any | null> {
         return this.groupRepo.getDetailedGroupData(groupId)
 
     }
