@@ -1,4 +1,3 @@
-import { env } from "../lib/env";
 import jwt from 'jsonwebtoken'
 
 import type { MemberService } from "./member.service";
@@ -6,6 +5,7 @@ import { PasswordsDoesNotMatchError, UnauthorizedError } from "../errors/errors"
 import bcrypt from 'bcrypt'
 import type { CreateMemberInput, SigninData, SignupData, TokenInput, TokenSummary } from "../zod";
 import type { TokenInput as Token } from "../zod";
+import { env } from '@/lib/env';
 
 export class AuthService {
     private SALT_ROUNDS = 10;

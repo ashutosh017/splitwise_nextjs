@@ -1,4 +1,3 @@
-import { AppError } from "@/errors/app_error";
 
 export type ActionResponse<T> =
     | { success: true; data: T; error: null }
@@ -13,7 +12,7 @@ export async function catchErrors<T>(
     } catch (error: any) {
         console.error("Action Error:", error);
 
-        const message = error instanceof AppError ? error.message : "An unexpected error occurred";
+        const message = error instanceof Error ? error.message : "An unexpected error occurred";
         return { success: false, data: null, error: message };
     }
 }

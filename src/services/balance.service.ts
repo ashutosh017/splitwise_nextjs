@@ -14,13 +14,21 @@ export class BalanceService {
     async getTotalBalance(userId: string, groupId: string): Promise<number> {
         const balances = await this.balanceRepo.getAllBalancesOfAUserInAGroup(userId, groupId);
         let totalBalance = 0;
+        console.log("user id: ", userId)
+        console.log("balances: ", balances)
         balances.forEach(b => {
-            if (b.fromMemberId)
+            if (b.fromMemberId === userId) {
                 totalBalance -= b.amount
-            else
+                console.log("inside if")
+            }
+            else {
+                console.log("inside if")
+
                 totalBalance += b.amount
+            }
 
         });
+        console.log("total balance: ", totalBalance)
         return totalBalance;
     }
     async createOrUpdate(input: CreateBalanceInput): Promise<BalanceSummary> {

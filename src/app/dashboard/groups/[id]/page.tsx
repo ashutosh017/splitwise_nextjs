@@ -13,18 +13,20 @@ import { CreateExpense } from "@/app/actions/expense";
 export default async function GroupPage({ params }: { params: { id: string } }) {
     const { id } = await params;
     const user = await getCurrentUser();
+    console.log("id: ", id)
     if (!user) redirect("/signin");
 
-    const group = (await getGroupDetail(id)).data
+    let group = (await getGroupDetail(id))
     if (group.error) {
         console.log("error: ", group.error)
         return;
     }
+    console.log("control")
 
-    if (!group) notFound();
+    if (!group || !group.data) notFound();
+    console.log("control2")
 
-    const totalBalance = (await getTotalBalanceInAGroup(user.id, group.id)).data
-
+    const totalBalance = (await getTotalBalanceInAGroup(user.id, group.data.id)).data
     return (
         <div className="max-w-6xl mx-auto space-y-8 pb-20 pt-4">
             {/* Navigation & Header */}
@@ -38,14 +40,14 @@ export default async function GroupPage({ params }: { params: { id: string } }) 
 
                 <div className="flex justify-between items-start">
                     <div>
-                        <h1 className="text-4xl font-bold tracking-tight">{group.name}</h1>
-                        <p className="text-muted-foreground mt-1">{group.description}</p>
+                        <h1 className="text-4xl font-bold tracking-tight">{group.data.name}</h1>
+                        <p className="text-muted-foreground mt-1">{group.data.description}</p>
                     </div>
                     <div className="flex gap-2">
                         {/* <Button variant="outline" size="icon">
                             <Settings className="h-4 w-4" />
                         </Button> */}
-                        <AddExpenseDialog group={group} />
+                        <AddExpenseDialog group={group.data} />
                     </div>
                 </div>
             </div>
@@ -56,7 +58,7 @@ export default async function GroupPage({ params }: { params: { id: string } }) 
                     <div className="flex items-center justify-between">
                         <h2 className="text-xl font-semibold">Recent Expenses</h2>
                     </div>
-                    <ExpenseList expenses={group.expenses} />
+                    <ExpenseList expenses={group.data.expenses} />
                 </div>
 
                 {/* Sidebar: Members & Balances */}
@@ -66,7 +68,7 @@ export default async function GroupPage({ params }: { params: { id: string } }) 
                             <Users className="h-5 w-5 text-primary" />
                             <h2 className="font-semibold text-lg">Group Members</h2>
                         </div>
-                        <MemberList members={group.members} />
+                        <MemberList members={group.data.members} />
                     </div>
 
                     {/* Quick Stats Card */}
