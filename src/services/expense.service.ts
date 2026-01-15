@@ -62,9 +62,12 @@ export class ExpenseService {
             case "AMOUNT": {
                 console.log("total: ", total)
                 let sum = 0;
+                console.log("splits: ", splits)
                 for (const s of splits) {
                     if (s.value == null) throw new InvalidSplitValueError();
                     const val = Number(s.value);
+                    console.log("value: ", s.value)
+                    console.log("value2: ", val)
                     sum += val
                     result.set(s.memberId, s.value);
                 }

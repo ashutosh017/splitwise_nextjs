@@ -15,6 +15,7 @@ export async function CreateExpense(initialState: any, formData: FormData): Prom
         const groupId = formData.get("groupId") as string;
         const rawSplits = formData.get("splits") as string;
         const splits = JSON.parse(rawSplits || "[]") as { memberId: string, value: number }[];
+        console.log(rawSplits, splits)
         const expenseSummary = await expenseService.create({
             description: description,
             splitType: splitType,
@@ -26,4 +27,5 @@ export async function CreateExpense(initialState: any, formData: FormData): Prom
         console.log("expense created: ", expenseSummary)
         return expenseSummary
     })
+
 }

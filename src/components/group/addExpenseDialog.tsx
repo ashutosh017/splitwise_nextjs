@@ -111,6 +111,7 @@ export function AddExpenseDialog({ group }: { group: any }) {
                                                 ...splitValues,
                                                 [gm.member.id]: Number(e.target.value)
                                             })}
+                                            required
                                         />
                                         <span className="text-xs text-muted-foreground">
                                             {splitType === "PERCENTAGE" ? "%" : splitType === "SHARE" ? "sh" : "$"}
