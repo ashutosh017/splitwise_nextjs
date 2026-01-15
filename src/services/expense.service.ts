@@ -15,8 +15,10 @@ export class ExpenseService {
 
     ) { }
     async create(input: CreateExpenseInput): Promise<ExpenseSummary> {
+        console.log("input: ", input)
         await this.validateExpense(input)
-        const map = this.normalizeSplits(input.splitType, input.amount, input.splits);
+        const splits = input.splits.map((s) => ({ ...s, value: Number(s.value) }))
+        const map = this.normalizeSplits(input.splitType, Number(input.amount), splits);
         return prisma.$transaction(async (tx) => {
             const expense = await this.expenseRepo.create({
                 amount: input.amount,
@@ -58,12 +60,15 @@ export class ExpenseService {
             }
 
             case "AMOUNT": {
+                console.log("total: ", total)
                 let sum = 0;
                 for (const s of splits) {
                     if (s.value == null) throw new InvalidSplitValueError();
-                    sum += s.value;
+                    const val = Number(s.value);
+                    sum += val
                     result.set(s.memberId, s.value);
                 }
+                console.log("sum: ", sum)
                 if (sum !== total) throw new SplitAmountMismatchError();
                 break;
             }
@@ -72,7 +77,8 @@ export class ExpenseService {
                 let percentSum = 0;
                 for (const s of splits) {
                     if (s.value == null) throw new InvalidSplitValueError();
-                    percentSum += s.value;
+                    const val = Number(s.value)
+                    percentSum += val
                     result.set(s.memberId, (total * s.value) / 100);
                 }
                 if (percentSum !== 100) throw new PercentageSplitNotEqualTo100Error();
@@ -90,7 +96,7 @@ export class ExpenseService {
                     if (s.value == null) throw new InvalidSplitValueError();
                     result.set(
                         s.memberId,
-                        (total * s.value) / totalShares
+                        (total * Number(s.value)) / totalShares
                     );
                 }
                 break;

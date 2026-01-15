@@ -10,6 +10,7 @@ export class PrismaExpenseRepository implements ExpenseRepository {
             data: {
                 amount: input.amount,
                 splitType: input.splitType,
+                description: input.description,
                 whoPaid: {
                     connect: {
                         id: input.whoPaidId

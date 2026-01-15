@@ -36,10 +36,10 @@ export default async function DashboardPage() {
                     <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
                     <p className="text-muted-foreground">Welcome back, {user.name}</p>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+                <div className="mt-2">
                     <CreateGroupDialog />
-                    <Button><Receipt className="mr-2 h-4 w-4" /> Add Expense</Button>
                 </div>
+                {/* <Button><Receipt className="mr-2 h-4 w-4" /> Add Expense</Button> */}
             </div>
             {/* Balance Overview Cards */}
             <div className="grid gap-4 md:grid-cols-3">
