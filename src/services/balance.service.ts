@@ -17,7 +17,7 @@ export class BalanceService {
         console.log("user id: ", userId)
         console.log("balances: ", balances)
         balances.forEach(b => {
-            if (b.fromMemberId === userId) {
+            if (b.fromMemberId !== userId) {
                 totalBalance -= b.amount
                 console.log("inside if")
             }

@@ -50,7 +50,7 @@ export class PrismaMemberRepository implements MemberRepository {
         }
         return this.toDomain(user)
     }
-    async findFromKeyword(keyword: string): Promise<Member[] | null> {
+    async findFromKeyword(keyword: string): Promise<Member[]> {
         return prisma.member.findMany({
             where: {
                 OR: [{

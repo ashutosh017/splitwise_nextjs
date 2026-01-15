@@ -7,5 +7,5 @@ export interface MemberRepository {
     findByEmail(email: string): Promise<MemberWithHashedPassword | null>
     findManyByEmail(emails: string[]): Promise<Member[]>
     findById(id: string): Promise<Member | null>
-    findFromKeyword(keyword: string): Promise<Member[] | null>
+    findFromKeyword(keyword: string): Promise<Member[]>
 }

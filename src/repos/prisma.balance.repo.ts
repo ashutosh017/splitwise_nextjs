@@ -30,8 +30,6 @@ export class PrismaBalanceRepository implements BalanceRepository {
         return this.toSummary(balance);
     }
     async getAllBalancesOfAUserInAGroup(userId: string, groupId: string): Promise<BalanceSummary[]> {
-        console.log("groupId: ", groupId)
-        console.log("userid: ", userId)
         const balances = await prisma.balance.findMany({
             where: {
                 OR: [
@@ -45,7 +43,6 @@ export class PrismaBalanceRepository implements BalanceRepository {
                 groupId
             }
         })
-        console.log("balances in repo: ", balances)
         return balances.map((b) => this.toSummary(b))
     }
     async find(groupId: string, fromMemberId: string, toMemberId: string): Promise<BalanceSummary | null> {

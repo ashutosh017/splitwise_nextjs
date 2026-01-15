@@ -8,6 +8,7 @@ import { MemberList } from "@/components/group/memberList";
 import { getGroupDetail, getTotalBalanceInAGroup } from "@/app/actions/group";
 import { AddExpenseDialog } from "@/components/group/addExpenseDialog";
 import { CreateExpense } from "@/app/actions/expense";
+import { AddMemberDialog } from "@/components/group/addMemberDialog";
 
 
 export default async function GroupPage({ params }: { params: { id: string } }) {
@@ -44,9 +45,7 @@ export default async function GroupPage({ params }: { params: { id: string } }) 
                         <p className="text-muted-foreground mt-1">{group.data.description}</p>
                     </div>
                     <div className="flex gap-2">
-                        {/* <Button variant="outline" size="icon">
-                            <Settings className="h-4 w-4" />
-                        </Button> */}
+                        <AddMemberDialog groupId={group.data.id} />
                         <AddExpenseDialog group={group.data} />
                     </div>
                 </div>

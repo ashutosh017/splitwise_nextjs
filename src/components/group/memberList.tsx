@@ -9,7 +9,7 @@ export function MemberList({ members }: { members: { member: Member }[] }) {
 
         <div className="space-y-4">
             {members && members.map((gm) => (
-                <div key={""} className="flex items-center justify-between">
+                <div key={gm.member.id} className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <Avatar className="h-8 w-8">
                             <AvatarFallback>

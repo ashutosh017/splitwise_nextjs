@@ -28,7 +28,7 @@ export class MemberService {
         const user = await this.memberRepo.findByEmail(email);
         return !!user;
     }
-    async findFromKeyword(keyword: string): Promise<Member[] | null> {
+    async findFromKeyword(keyword: string): Promise<Member[]> {
         return this.memberRepo.findFromKeyword(keyword);
     }
 

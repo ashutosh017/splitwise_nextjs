@@ -6,6 +6,12 @@ import { getCurrentUser } from "./auth";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
+export async function addMember(groupId: string, uesrId: string): Promise<ActionResponse<void>> {
+    return catchErrors(async () => {
+        return groupService.addMember(groupId, uesrId)
+    })
+}
+
 export async function createGroup(initialState: any, formData: FormData): Promise<ActionResponse<GroupSummary>> {
     return catchErrors(async () => {
         const currentUser = await getCurrentUser();
