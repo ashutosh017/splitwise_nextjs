@@ -2,7 +2,7 @@ import { BalanceNotFoundError, GroupNotFoundError, InsufficientBalanceError, Inv
 import type { Prisma } from "@/generated/prisma/client";
 import type { BalanceRepository } from "../interfaces";
 import prisma from "../lib/prisma";
-import type { BalanceSummary, CreateBalanceInput, ExpenseSummary, SplitSummary } from "../zod";
+import type { BalanceSummary, CreateBalanceInput, DetailedGroupResponse, ExpenseSummary, GroupSummary, SplitSummary } from "../zod";
 import type { GroupService } from "./group.service";
 
 export class BalanceService {
@@ -10,6 +10,17 @@ export class BalanceService {
         private readonly balanceRepo: BalanceRepository,
         private readonly groupService: GroupService
     ) {
+    }
+    async getCompleteBalanceDistribution(userId: string): Promise<Map<string, number>> {
+        const groups = await this.groupService.listGroupsForMember(userId);
+        const balanceMap = new Map<string, number>();
+        await Promise.all(
+            groups.map(async (group) => {
+                const totalBalance = await this.getTotalBalance(userId, group.id);
+                balanceMap.set(group.id, totalBalance);
+            })
+        );
+        return balanceMap;
     }
     async getTotalBalance(userId: string, groupId: string): Promise<number> {
         const balances = await this.balanceRepo.getAllBalancesOfAUserInAGroup(userId, groupId);

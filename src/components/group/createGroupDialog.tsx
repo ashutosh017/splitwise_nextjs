@@ -6,8 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Plus, Search, X } from "lucide-react";
-import { createGroup, findMatchingUsers } from "@/app/actions/group";
+import { createGroup } from "@/app/actions/group";
 import { Member } from "@/zod";
+import { searchUsers } from "@/app/actions/members";
 
 export function CreateGroupDialog() {
     const [members, setMembers] = useState<string[]>([]);
@@ -30,7 +31,7 @@ export function CreateGroupDialog() {
     useEffect(() => {
         const delayDebounceFn = setTimeout(async () => {
             if (emailInput.length >= 3) {
-                const results = await findMatchingUsers(emailInput);
+                const results = await searchUsers(emailInput);
                 if (results.data) setSuggestions(results.data);
             } else {
                 setSuggestions([]);

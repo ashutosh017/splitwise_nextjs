@@ -7,6 +7,7 @@ import { verifyToken } from "../actions/auth";
 import { CreateGroupDialog } from "@/components/group/createGroupDialog";
 import { findGroups } from "../actions/group";
 import { GroupCard } from "@/components/group/groupCard";
+import { getOwedOwnBalanceDistribution } from "../actions/balance";
 
 export default async function DashboardPage() {
     const cookieStore = await cookies();
@@ -24,8 +25,14 @@ export default async function DashboardPage() {
 
     console.log("groups: ", userGroups);
 
-    const totalOwedToYou = 450.00;
-    const totalYouOwe = 120.50;
+    const owedOwnedDist = await getOwedOwnBalanceDistribution();
+    // 'owned' (positive values) is what others owe YOU
+    const totalOwedToYou = owedOwnedDist.owned;
+
+    // 'owed' (negative values) is what YOU owe others
+    const totalYouOwe = Math.abs(owedOwnedDist.owed);
+
+    // Your net position
     const netBalance = totalOwedToYou - totalYouOwe;
 
     return (

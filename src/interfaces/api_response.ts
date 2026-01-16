@@ -1,6 +1,6 @@
-export interface ApiResponse<T> {
-    success: boolean,
-    message?: string,
-    data?: T,
-    stack?: any
-}
+// export interface ApiResponse<T> {
+//     success: boolean,
+//     message?: string,
+//     data?: T,
+//     stack?: any
+// }

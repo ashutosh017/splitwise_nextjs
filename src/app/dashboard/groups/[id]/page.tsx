@@ -73,7 +73,12 @@ export default async function GroupPage({ params }: { params: { id: string } }) 
                     {/* Quick Stats Card */}
                     <div className="rounded-xl bg-primary/5 border border-primary/20 p-6">
                         <h3 className="text-sm font-medium text-primary mb-1">Your total balance here</h3>
-                        <p className="text-2xl font-bold text-green-500">${totalBalance}</p>
+                        {totalBalance && totalBalance < 0 ?
+                            <p className="text-2xl font-bold text-orange-500">${totalBalance}</p>
+                            :
+                            <p className="text-2xl font-bold text-green-500">${totalBalance}</p>
+
+                        }
                     </div>
                 </div>
             </div>
