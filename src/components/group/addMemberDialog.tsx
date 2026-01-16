@@ -43,7 +43,7 @@ export function AddMemberDialog({ groupId }: { groupId: string }) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant="outline" size={"lg"}>
+                <Button variant="outline" size={"default"}>
                     <UserPlus className="mr-2 h-4 w-4" /> Add Member
                 </Button>
             </DialogTrigger>

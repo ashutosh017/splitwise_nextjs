@@ -1,14 +1,14 @@
 import { notFound, redirect } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Receipt, Users, ArrowLeft, Settings } from "lucide-react";
+import { Users, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { getCurrentUser } from "@/app/actions/auth";
 import { ExpenseList } from "@/components/group/exepenseList";
 import { MemberList } from "@/components/group/memberList";
 import { getGroupDetail, getTotalBalanceInAGroup } from "@/app/actions/group";
 import { AddExpenseDialog } from "@/components/group/addExpenseDialog";
-import { CreateExpense } from "@/app/actions/expense";
 import { AddMemberDialog } from "@/components/group/addMemberDialog";
+import { SettleGroupDialog } from "@/components/group/settleGroupDialog";
+import { getNetBalancesOfAllUsersInAGroup } from "@/app/actions/balance";
 
 
 export default async function GroupPage({ params }: { params: { id: string } }) {
@@ -28,6 +28,7 @@ export default async function GroupPage({ params }: { params: { id: string } }) 
     console.log("control2")
 
     const totalBalance = (await getTotalBalanceInAGroup(user.id, group.data.id)).data
+    const netBalances = (await getNetBalancesOfAllUsersInAGroup(group.data.id)).data
     return (
         <div className="max-w-6xl mx-auto space-y-8 pb-20 pt-4">
             {/* Navigation & Header */}
@@ -45,6 +46,7 @@ export default async function GroupPage({ params }: { params: { id: string } }) 
                         <p className="text-muted-foreground mt-1">{group.data.description}</p>
                     </div>
                     <div className="flex gap-2">
+                        <SettleGroupDialog group={group.data} netBalances={netBalances ?? {}} />
                         <AddMemberDialog groupId={group.data.id} />
                         <AddExpenseDialog group={group.data} />
                     </div>

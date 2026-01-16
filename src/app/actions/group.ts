@@ -5,6 +5,10 @@ import { GroupSummary, GroupWithMembers, Member } from "@/zod";
 import { getCurrentUser } from "./auth";
 import { redirect } from "next/navigation";
 
+export async function settleDebtAction(groupId: string, fromId: string, toId: string, amt: string) {
+
+}
+
 export async function addMember(groupId: string, uesrId: string): Promise<ActionResponse<void>> {
     return catchErrors(async () => {
         return groupService.addMember(groupId, uesrId)

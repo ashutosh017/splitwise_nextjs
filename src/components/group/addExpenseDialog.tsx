@@ -39,7 +39,7 @@ export function AddExpenseDialog({ group }: { group: any }) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button><Receipt className="mr-2 h-4 w-4" /> Add Expense</Button>
+                <Button variant={"outline"}><Receipt className="mr-2 h-4 w-4" /> Add Expense</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[500]">
                 <DialogHeader>

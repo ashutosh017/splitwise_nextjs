@@ -10,9 +10,13 @@ export async function getTotalBalanceDistribution(): Promise<ActionResponse<Reco
     if (!user) redirect("/signin");
 
     return catchErrors(async () => {
-        const map = await balanceService.getCompleteBalanceDistribution(user.id);
-        return Object.fromEntries(map);
+        const balanceDistribution = await balanceService.getCompleteBalanceDistribution(user.id);
+        return balanceDistribution
     });
+}
+
+export async function getNetBalancesOfAllUsersInAGroup(groupId: string): Promise<ActionResponse<Record<string, number>>> {
+    return catchErrors(async () => balanceService.getNetBalancesOfAllUsersInAGroup(groupId))
 }
 
 interface OwedOwnedDistribution { totalBalance: number, owed: number, owned: number }

@@ -11,13 +11,22 @@ export class BalanceService {
         private readonly groupService: GroupService
     ) {
     }
-    async getCompleteBalanceDistribution(userId: string): Promise<Map<string, number>> {
+    async getNetBalancesOfAllUsersInAGroup(groupId: string): Promise<Record<string, number>> {
+        const members = await this.groupService.getAllMembers(groupId);
+        const netBalanceMap: Record<string, number> = {}
+        await Promise.all(members.map(async (m) => {
+            const toatalBalance = await this.getTotalBalance(m.id, groupId)
+            netBalanceMap[m.id] = toatalBalance
+        }))
+        return netBalanceMap
+    }
+    async getCompleteBalanceDistribution(userId: string): Promise<Record<string, number>> {
         const groups = await this.groupService.listGroupsForMember(userId);
-        const balanceMap = new Map<string, number>();
+        const balanceMap: Record<string, number> = {}
         await Promise.all(
             groups.map(async (group) => {
                 const totalBalance = await this.getTotalBalance(userId, group.id);
-                balanceMap.set(group.id, totalBalance);
+                balanceMap[group.id] = totalBalance
             })
         );
         return balanceMap;
