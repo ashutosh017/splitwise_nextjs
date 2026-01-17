@@ -71,11 +71,8 @@ export class GroupService {
     }
     async listGroupsForMember(memberId: string): Promise<GroupWithMembers[]> {
         const member = await this.memberService.findById(memberId);
-        console.log("control1", member)
         if (!member) throw new MemberNotFoundError;
-        console.log("control2")
         const groups = await this.groupRepo.listGroupsForMember(memberId);
-        console.log("control3", groups)
         return groups
     }
 

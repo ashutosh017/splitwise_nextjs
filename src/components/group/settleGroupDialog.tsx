@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { CheckCircle2, ArrowRight, Info } from "lucide-react";
 import { settleDebtAction } from "@/app/actions/group";
+import { DetailedGroupData } from "@/interfaces";
 
 
 export interface OptimizedSettlement {
@@ -16,7 +17,7 @@ export interface OptimizedSettlement {
     amount: number;
 }
 
-export function getOptimizedSettlements(members: any[], netBalance: Record<string, number>): OptimizedSettlement[] {
+export function getOptimizedSettlements(members: DetailedGroupData['members'], netBalance: Record<string, number>): OptimizedSettlement[] {
     // 1. Calculate net balance for each member
     // (In a real app, you'd pull this from your balanceService)
     const membersWithBalances = members.map((m) => ({
@@ -58,7 +59,7 @@ export function getOptimizedSettlements(members: any[], netBalance: Record<strin
 
     return settlements;
 }
-export function SettleGroupDialog({ group, netBalances }: { group: any, netBalances: Record<string, number> }) {
+export function SettleGroupDialog({ group, netBalances }: { group: DetailedGroupData, netBalances: Record<string, number> }) {
     const [loading, setLoading] = useState<string | null>(null);
 
     // Assuming group.members includes a pre-calculated 'netBalance'

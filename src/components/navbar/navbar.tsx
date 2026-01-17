@@ -10,7 +10,6 @@ export default async function Navbar() {
     const result = await verifyToken({ token });
 
     if (!result.success) {
-        console.log("Verification failed:", result.error);
         return <ClientNavbar isLoggedIn={false} name={null} />;
     }
 

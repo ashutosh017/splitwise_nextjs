@@ -1,3 +1,4 @@
+import { Prisma } from "@/generated/prisma/client";
 import type { CreateGroupInput, CreateGroupWithMembersInput, GroupSummary, GroupWithMembers, Member } from "../zod";
 
 export interface GroupRepository {
@@ -14,3 +15,85 @@ export interface GroupRepository {
     listGroupsForMember(memberId: string): Promise<GroupWithMembers[]>
     delete(groupId: string): Promise<void>
 }
+
+export const detailedGroupSelect = {
+    id: true,
+    name: true,
+    description: true,
+    balances: {
+        select: {
+            id: true,
+            amount: true,
+            from: {
+                select: {
+                    id: true,
+                    email: true,
+                    name: true
+                }
+            },
+            to: {
+                select: {
+                    id: true,
+                    email: true,
+                    name: true
+                }
+            },
+            updatedAt: true,
+            dateCreated: true
+        }
+    },
+    expenses: {
+        select: {
+            id: true,
+            amount: true,
+            description: true,
+            whoPaid: {
+                select: {
+                    id: true,
+                    email: true,
+                    name: true
+                }
+            },
+            splitType: true,
+            splits: {
+                select: {
+                    value: true,
+                    member: {
+                        select: {
+                            id: true,
+                            name: true,
+                            email: true
+                        }
+                    },
+                    dateCreated: true,
+                    updatedAt: true
+                }
+            },
+            dateCreated: true,
+            updatedAt: true
+        },
+        orderBy: { dateCreated: 'desc' },
+        take: 25
+    },
+    members: {// GroupMmeber[] -> junction table 
+        select: {
+            member: {
+                select: {
+                    id: true,
+                    email: true,
+                    name: true
+                }
+            }
+        }
+    },
+    dateCreated: true,
+    updatedAt: true,
+    _count: {
+        select: {
+            members: true,
+            balances: true,
+            expenses: true
+        }
+    }
+} satisfies Prisma.GroupSelect
+export type DetailedGroupData = Prisma.GroupGetPayload<{ select: typeof detailedGroupSelect }>

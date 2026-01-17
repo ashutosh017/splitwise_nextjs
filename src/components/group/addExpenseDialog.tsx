@@ -1,4 +1,3 @@
-// @ts-nocheck
 'use client';
 
 import { useState, useMemo, useActionState } from "react";
@@ -9,9 +8,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Receipt } from "lucide-react";
 import { CreateExpense } from "@/app/actions/expense";
 import { SplitType } from "@/zod";
+import { DetailedGroupData } from "@/interfaces";
 
 
-export function AddExpenseDialog({ group }: { group: any }) {
+export function AddExpenseDialog({ group }: { group: DetailedGroupData }) {
     const [open, setOpen] = useState(false);
     const [description, setDescription] = useState("");
     const [amount, setAmount] = useState<number>(0);

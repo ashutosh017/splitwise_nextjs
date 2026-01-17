@@ -2,7 +2,7 @@ import { BalanceNotFoundError, GroupNotFoundError, InsufficientBalanceError, Inv
 import type { Prisma } from "@/generated/prisma/client";
 import type { BalanceRepository } from "../interfaces";
 import prisma from "../lib/prisma";
-import type { BalanceSummary, CreateBalanceInput, DetailedGroupResponse, ExpenseSummary, GroupSummary, SplitSummary } from "../zod";
+import type { BalanceSummary, CreateBalanceInput, ExpenseSummary, GroupSummary, SplitSummary } from "../zod";
 import type { GroupService } from "./group.service";
 
 export class BalanceService {
@@ -15,7 +15,7 @@ export class BalanceService {
         const members = await this.groupService.getAllMembers(groupId);
         const netBalanceMap: Record<string, number> = {}
         await Promise.all(members.map(async (m) => {
-            const toatalBalance = await this.getTotalBalance(m.id, groupId)
+            const toatalBalance = await this.getTotalBalanceOfAUserInAGroup(m.id, groupId)
             netBalanceMap[m.id] = toatalBalance
         }))
         return netBalanceMap
@@ -25,30 +25,24 @@ export class BalanceService {
         const balanceMap: Record<string, number> = {}
         await Promise.all(
             groups.map(async (group) => {
-                const totalBalance = await this.getTotalBalance(userId, group.id);
+                const totalBalance = await this.getTotalBalanceOfAUserInAGroup(userId, group.id);
                 balanceMap[group.id] = totalBalance
             })
         );
         return balanceMap;
     }
-    async getTotalBalance(userId: string, groupId: string): Promise<number> {
+    async getTotalBalanceOfAUserInAGroup(userId: string, groupId: string): Promise<number> {
         const balances = await this.balanceRepo.getAllBalancesOfAUserInAGroup(userId, groupId);
         let totalBalance = 0;
-        console.log("user id: ", userId)
-        console.log("balances: ", balances)
         balances.forEach(b => {
             if (b.fromMemberId !== userId) {
                 totalBalance -= b.amount
-                console.log("inside if")
             }
             else {
-                console.log("inside if")
-
                 totalBalance += b.amount
             }
 
         });
-        console.log("total balance: ", totalBalance)
         return totalBalance;
     }
     async createOrUpdate(input: CreateBalanceInput): Promise<BalanceSummary> {

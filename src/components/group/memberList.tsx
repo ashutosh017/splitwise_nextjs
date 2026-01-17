@@ -4,7 +4,6 @@ import { Member } from "@/zod";
 
 export function MemberList({ members }: { members: { member: Member }[] }) {
     if (!members) return;
-    console.log("members: ", members)
     return (
 
         <div className="space-y-4">

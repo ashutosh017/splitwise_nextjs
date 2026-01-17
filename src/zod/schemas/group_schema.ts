@@ -1,5 +1,4 @@
 import z from 'zod'
-import { MemberSchema } from './member_schema'
 
 export const CreateGroupSchema = z.object({
     name: z.string().min(1).max(100),
@@ -32,11 +31,7 @@ export const GroupWithMembersSchema = GroupSummarySchema.extend({
         id: z.uuid()
     }))
 })
-export const DetailedGroupSchema = GroupSummarySchema.extend({
-    members: z.array(MemberSchema)
-})
 
-export type DetailedGroupResponse = z.infer<typeof DetailedGroupSchema>
 export type GroupWithMembers = z.infer<typeof GroupWithMembersSchema>
 export type GroupIdInput = z.infer<typeof GroupIdInputSchema>
 export type CreateGroupInput = z.infer<typeof CreateGroupSchema>

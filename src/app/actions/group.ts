@@ -4,6 +4,7 @@ import { ActionResponse, catchErrors } from "@/lib/action-wrapper";
 import { GroupSummary, GroupWithMembers, Member } from "@/zod";
 import { getCurrentUser } from "./auth";
 import { redirect } from "next/navigation";
+import { DetailedGroupData } from "@/interfaces";
 
 export async function settleDebtAction(groupId: string, fromId: string, toId: string, amt: string) {
 
@@ -44,13 +45,14 @@ export async function createGroup(initialState: any, formData: FormData): Promis
         });
 
         // revalidatePath('/dashboard');
-        console.log("control reached here: ", groupSummary)
 
         return groupSummary;
     });
 }
 
-export async function getGroupDetail(groupId: string): Promise<ActionResponse<any | null>> {
+
+
+export async function getGroupDetail(groupId: string): Promise<ActionResponse<DetailedGroupData | null>> {
     return catchErrors(async () => {
         const group = await groupService.getGroupDetails(groupId)
         return JSON.parse(JSON.stringify(group))
@@ -60,13 +62,13 @@ export async function getGroupDetail(groupId: string): Promise<ActionResponse<an
 export async function findGroups(memberId: string): Promise<ActionResponse<GroupWithMembers[] | null>> {
     return catchErrors(async () => {
         const groups = await groupService.listGroupsForMember(memberId)
-        console.log("grousp: ", groups)
         return groups
     }
     )
 }
-export async function getTotalBalanceInAGroup(userId: string, groupId: string): Promise<ActionResponse<number>> {
+export async function getTotalBalanceOfAUserInAGroup(userId: string, groupId: string): Promise<ActionResponse<number>> {
     return catchErrors(async () => {
-        return balanceService.getTotalBalance(userId, groupId);
+        console.log("userID: ", userId)
+        return balanceService.getTotalBalanceOfAUserInAGroup(userId, groupId);
     })
 }

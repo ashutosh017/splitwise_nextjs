@@ -9,8 +9,9 @@ import {
 import { format } from "date-fns";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { getCurrentUser } from "@/app/actions/auth";
+import { DetailedGroupData } from "@/interfaces";
 
-export async function ExpenseList({ expenses }: { expenses: any[] }) {
+export async function ExpenseList({ expenses }: { expenses: DetailedGroupData['expenses'] }) {
     const currentUserr = await getCurrentUser();
     return (
         <div className="space-y-3">
@@ -20,7 +21,7 @@ export async function ExpenseList({ expenses }: { expenses: any[] }) {
                         <div className="group grid grid-cols-[auto_1fr_auto] lg:grid-cols-[auto_1fr_120px_150px_120px_100px] items-center gap-4 p-4 rounded-xl border border-white/10 bg-card hover:bg-white/5 transition-all cursor-pointer">
 
                             {/* 1. Date */}
-                            <div className="flex flex-col items-center justify-center w-12 h-12 rounded-lg bg-secondary/50 text-muted-foreground shrink-0">
+                            <div className="flex flex-col items-center justify-center w-12 h-12 rounded-lg bg-secondary/50 text-muted-foreground shrink-0" suppressHydrationWarning>
                                 <span className="text-[10px] uppercase font-bold">{format(new Date(expense.dateCreated), "MMM")}</span>
                                 <span className="text-lg font-bold leading-none">{format(new Date(expense.dateCreated), "dd")}</span>
                             </div>

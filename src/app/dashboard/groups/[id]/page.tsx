@@ -4,7 +4,7 @@ import Link from "next/link";
 import { getCurrentUser } from "@/app/actions/auth";
 import { ExpenseList } from "@/components/group/exepenseList";
 import { MemberList } from "@/components/group/memberList";
-import { getGroupDetail, getTotalBalanceInAGroup } from "@/app/actions/group";
+import { getGroupDetail, getTotalBalanceOfAUserInAGroup } from "@/app/actions/group";
 import { AddExpenseDialog } from "@/components/group/addExpenseDialog";
 import { AddMemberDialog } from "@/components/group/addMemberDialog";
 import { SettleGroupDialog } from "@/components/group/settleGroupDialog";
@@ -14,20 +14,16 @@ import { getNetBalancesOfAllUsersInAGroup } from "@/app/actions/balance";
 export default async function GroupPage({ params }: { params: { id: string } }) {
     const { id } = await params;
     const user = await getCurrentUser();
-    console.log("id: ", id)
     if (!user) redirect("/signin");
 
     let group = (await getGroupDetail(id))
     if (group.error) {
-        console.log("error: ", group.error)
         return;
     }
-    console.log("control")
 
     if (!group || !group.data) notFound();
-    console.log("control2")
 
-    const totalBalance = (await getTotalBalanceInAGroup(user.id, group.data.id)).data
+    const totalBalance = (await getTotalBalanceOfAUserInAGroup(user.id, group.data.id)).data
     const netBalances = (await getNetBalancesOfAllUsersInAGroup(group.data.id)).data
     return (
         <div className="max-w-6xl mx-auto space-y-8 pb-20 pt-4">

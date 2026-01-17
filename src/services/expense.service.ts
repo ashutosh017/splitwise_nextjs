@@ -15,7 +15,6 @@ export class ExpenseService {
 
     ) { }
     async create(input: CreateExpenseInput): Promise<ExpenseSummary> {
-        console.log("input: ", input)
         await this.validateExpense(input)
         const splits = input.splits.map((s) => ({ ...s, value: Number(s.value) }))
         const map = this.normalizeSplits(input.splitType, Number(input.amount), splits);
@@ -60,18 +59,13 @@ export class ExpenseService {
             }
 
             case "AMOUNT": {
-                console.log("total: ", total)
                 let sum = 0;
-                console.log("splits: ", splits)
                 for (const s of splits) {
                     if (s.value == null) throw new InvalidSplitValueError();
                     const val = Number(s.value);
-                    console.log("value: ", s.value)
-                    console.log("value2: ", val)
                     sum += val
                     result.set(s.memberId, s.value);
                 }
-                console.log("sum: ", sum)
                 if (sum !== total) throw new SplitAmountMismatchError();
                 break;
             }

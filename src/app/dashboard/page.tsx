@@ -18,12 +18,7 @@ export default async function DashboardPage() {
     if (!auth.success) redirect("/signin");
 
     const user = auth.data;
-
-    console.log("user: ", user);
-
     const userGroups = (await findGroups(user.id)).data
-
-    console.log("groups: ", userGroups);
 
     const owedOwnedDist = await getOwedOwnBalanceDistribution();
     // 'owned' (positive values) is what others owe YOU
