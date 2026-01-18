@@ -9,16 +9,18 @@ export default async function Home() {
   const token = cookieStore.get("token");
   let user = null;
   if (token) {
-    const { success, data } = await verifyToken({ token: token.value })
+    const { success, data } = await verifyToken({ token: token.value });
     if (data) user = data;
   }
   return (
-    <div className="flex flex-col items-center justify-center space-y-20 py-20">
+    <div className="flex flex-col items-center justify-center space-y-20 py-20 px-3">
       {/* Hero Section */}
       <section className="text-center space-y-6">
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight">
           {user ? (
-            <>Welcome back, <span className="text-primary">{user.name}</span></>
+            <>
+              Welcome back, <span className="text-primary">{user.name}</span>
+            </>
           ) : (
             "Less stress when sharing expenses"
           )}
@@ -70,9 +72,17 @@ export default async function Home() {
   );
 }
 
-function FeatureCard({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) {
+function FeatureCard({
+  icon,
+  title,
+  description,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}) {
   return (
-    <div className="p-8 rounded-2xl border border-white/10 bg-card hover:bg-accent/50 transition-colors space-y-4">
+    <div className="p-8 rounded-2xl border dark:border-white/10 border-black/50 bg-card hover:bg-accent/50 transition-colors space-y-4">
       <div className="mb-4">{icon}</div>
       <h3 className="text-xl font-bold">{title}</h3>
       <p className="text-muted-foreground">{description}</p>
