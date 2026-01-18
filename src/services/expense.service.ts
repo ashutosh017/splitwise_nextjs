@@ -36,7 +36,7 @@ export class ExpenseService {
                 expense,
                 map, tx
             );
-
+            console.log("expense created: ", expense);
             return expense;
         })
     }
