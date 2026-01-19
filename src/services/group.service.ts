@@ -10,6 +10,9 @@ export class GroupService {
         private readonly memberService: MemberService,
     ) {
     }
+    async updateGroupDetails({ id, name, description }: { id: string, name: string, description: string }): Promise<void> {
+        return this.groupRepo.updateGroupDetails({ id, name, description })
+    }
     async getGroupDetails(groupId: string): Promise<any | null> {
         return this.groupRepo.getDetailedGroupData(groupId)
     }

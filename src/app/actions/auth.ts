@@ -29,7 +29,10 @@ export async function Signup(prevState: any, formData: FormData) {
     const password = formData.get('password') as string
     const confirmPassword = formData.get('confirmPassword') as string
     return catchErrors(async () => {
-        return authService.signup({ name, email, password, confirmPassword })
+        const response = await authService.signup({ name, email, password, confirmPassword })
+        const cookieStore = await cookies();
+        cookieStore.set('token', response.token)
+        return response.token
     })
 }
 

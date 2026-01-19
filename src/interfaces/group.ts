@@ -3,6 +3,7 @@ import type { CreateGroupInput, CreateGroupWithMembersInput, GroupSummary, Group
 
 export interface GroupRepository {
     create(data: CreateGroupInput): Promise<GroupSummary>
+    updateGroupDetails({ id, name, description }: { id: string, name: string, description: string }): Promise<void>
     createGroupWithMembers(input: CreateGroupWithMembersInput): Promise<GroupSummary>
     findById(groupId: string): Promise<GroupSummary | null>
     getDetailedGroupData(groupId: string): Promise<any | null>

@@ -72,3 +72,11 @@ export async function getTotalBalanceOfAUserInAGroup(userId: string, groupId: st
         return balanceService.getTotalBalanceOfAUserInAGroup(userId, groupId);
     })
 }
+
+export async function updateGroupDetails(groupId: string, formData: FormData): Promise<ActionResponse<void>> {
+    const name = formData.get("name") as string
+    const description = formData.get("description") as string
+    return catchErrors(async () => {
+        return groupService.updateGroupDetails({ id: groupId, name, description })
+    })
+}

@@ -3,14 +3,14 @@ import jwt from 'jsonwebtoken'
 import type { MemberService } from "./member.service";
 import { PasswordsDoesNotMatchError, UnauthorizedError } from "../errors/errors";
 import bcrypt from 'bcrypt'
-import type { CreateMemberInput, SigninData, SignupData, TokenInput, TokenSummary } from "../zod";
+import type { CreateMemberInput, MemberWithHashedPassword, SigninData, SignupData, TokenInput, TokenSummary } from "../zod";
 import type { TokenInput as Token } from "../zod";
 import { env } from '@/lib/env';
 
 export class AuthService {
     private SALT_ROUNDS = 10;
     constructor(private memberService: MemberService) { }
-    async signup(data: SignupData): Promise<void> {
+    async signup(data: SignupData): Promise<Token> {
         if (data.password !== data.confirmPassword) throw new PasswordsDoesNotMatchError()
         const hashedPassword = await bcrypt.hash(data.password, this.SALT_ROUNDS)
         const createInput: CreateMemberInput = {
@@ -18,17 +18,25 @@ export class AuthService {
             email: data.email,
             password: hashedPassword
         }
-        await this.memberService.create(createInput);
+        const user = await this.memberService.create(createInput);
+        const token = this.createJWT(user);
+        return {
+            token
+        }
     }
 
     async signin(data: SigninData): Promise<Token> {
         const user = await this.memberService.findByEmail(data.email);
-        const token = jwt.sign({ id: user.id, name: user.name, email: user.email }, env.JWT_SECRET, {
-            expiresIn: '7d'
-        })
+        const token = this.createJWT(user)
         return {
             token,
         }
+    }
+
+    private createJWT(user: MemberWithHashedPassword): string {
+        return jwt.sign({ id: user.id, name: user.name, email: user.email }, env.JWT_SECRET, {
+            expiresIn: '7d'
+        })
     }
     async verifyToken(data: TokenInput): Promise<TokenSummary> {
         try {

@@ -12,6 +12,7 @@ import { AddExpenseDialog } from "@/components/group/addExpenseDialog";
 import { AddMemberDialog } from "@/components/group/addMemberDialog";
 import { SettleGroupDialog } from "@/components/group/settleGroupDialog";
 import { getNetBalancesOfAllUsersInAGroup } from "@/app/actions/balance";
+import { EditGroupDialog } from "@/components/group/editGroupDialog";
 
 export default async function GroupPage({
   params,
@@ -29,9 +30,11 @@ export default async function GroupPage({
 
   if (!group || !group.data) notFound();
 
-  const totalBalance = (
-    await getTotalBalanceOfAUserInAGroup(user.id, group.data.id)
-  ).data;
+  const totalBalance = parseFloat(
+    (
+      await getTotalBalanceOfAUserInAGroup(user.id, group.data.id)
+    ).data?.toFixed(2) ?? "",
+  );
   const netBalances = (await getNetBalancesOfAllUsersInAGroup(group.data.id))
     .data;
   return (
@@ -45,8 +48,8 @@ export default async function GroupPage({
           <ArrowLeft className="mr-2 h-4 w-4" /> Back to Dashboard
         </Link>
 
-        <div className="flex justify-between items-start">
-          <div>
+        <div className="flex justify-between items-start ">
+          <div className="">
             <h1 className="text-4xl font-bold tracking-tight">
               {group.data.name}
             </h1>
@@ -54,7 +57,8 @@ export default async function GroupPage({
               {group.data.description}
             </p>
           </div>
-          <div className="gap-2 grid grid-cols-1 md:grid-cols-3 ">
+          <div className="gap-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4    ">
+            <EditGroupDialog group={group.data} />
             <SettleGroupDialog
               group={group.data}
               netBalances={netBalances ?? {}}

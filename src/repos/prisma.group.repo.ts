@@ -12,6 +12,16 @@ export class PrismaGroupRepository implements GroupRepository {
         })
         return this.toSummary(group);
     }
+    async updateGroupDetails({ id, name, description }: { id: string, name: string, description: string }): Promise<void> {
+        await prisma.group.update({
+            where: {
+                id
+            },
+            data: {
+                name, description
+            }
+        })
+    }
     async createGroupWithMembers(input: CreateGroupWithMembersInput): Promise<GroupSummary> {
         const group = await prisma.group.create({
             data: {
