@@ -28,7 +28,7 @@ export async function getOwedOwnBalanceDistribution(): Promise<OwedOwnedDistribu
     const balanceData = balanceMapResp.data;
 
     Object.values(balanceData).forEach((val) => {
-        const amount = Number(val);
+        const amount = parseFloat(Number(val).toFixed(2));
         if (amount < 0) {
             distribution.owed += Math.abs(amount); // Keep owed as a positive "debt" number
         } else {

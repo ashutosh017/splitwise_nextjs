@@ -61,8 +61,7 @@ export async function getGroupDetail(groupId: string): Promise<ActionResponse<De
 
 export async function findGroups(memberId: string): Promise<ActionResponse<GroupWithMembers[] | null>> {
     return catchErrors(async () => {
-        const groups = await groupService.listGroupsForMember(memberId)
-        return groups
+        return groupService.listGroupsForMember(memberId)
     }
     )
 }
@@ -79,4 +78,11 @@ export async function updateGroupDetails(groupId: string, formData: FormData): P
     return catchErrors(async () => {
         return groupService.updateGroupDetails({ id: groupId, name, description })
     })
+}
+
+export async function removeMember(groupId: string, memberId: string): Promise<ActionResponse<void>> {
+    return catchErrors(async () => {
+        return groupService.removeMember(groupId, memberId);
+    })
+
 }

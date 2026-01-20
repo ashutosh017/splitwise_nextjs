@@ -83,13 +83,6 @@ export default async function DashboardPage() {
 
       {/* Main Content Area */}
       <div className="grid gap-8 md:grid-cols-2">
-        {/* <section className="space-y-4">
-                    <h2 className="text-xl font-semibold">Recent Activity</h2>
-                    <div className="rounded-xl border border-white/10 p-4 text-sm text-muted-foreground text-center py-10">
-                        No recent expenses to show.
-                    </div>
-                </section> */}
-
         <section className="space-y-4">
           <h2 className="text-xl font-semibold">Your Groups</h2>
 

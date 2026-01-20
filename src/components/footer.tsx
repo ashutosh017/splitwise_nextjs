@@ -22,13 +22,15 @@ export function Footer() {
           {/* 3. Social Links */}
           <div className="flex items-center gap-5 order-2 md:order-3">
             <Link
-              href="#"
+              target="_blank"
+              href="https://x.com/ashutosh__018"
               className="text-muted-foreground hover:text-black dark:hover:text-white transition-colors"
             >
               <Github className="h-5 w-5" />
             </Link>
             <Link
-              href="#"
+              target="_blank"
+              href="https://github.com/ashutosh017"
               className="text-muted-foreground hover:text-black dark:hover:text-white transition-colors"
             >
               <Twitter className="h-5 w-5" />

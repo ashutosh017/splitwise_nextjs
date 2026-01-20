@@ -85,7 +85,7 @@ export default async function GroupPage({
               <Users className="h-5 w-5 text-primary" />
               <h2 className="font-semibold text-lg">Group Members</h2>
             </div>
-            <MemberList members={group.data.members} />
+            <MemberList group={group.data} />
           </div>
 
           {/* Quick Stats Card */}
